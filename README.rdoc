@@ -24,4 +24,7 @@ Functioning Components:
 2. Add Execution Completion Pop-up/Alert
 3. More selenium power
 
+== Requirements/Dependencies:
+1. Sidekiq for execution management
+
 
