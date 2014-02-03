@@ -1,0 +1,10 @@
+
+ 'User Name' Presence: True
+Action: Enter Value - abc
+
+ 'Password' Presence: True
+Action: Enter Value - xyz
+
+ 'Login Button' Presence: True
+Action: Click
+timed out after 10 seconds

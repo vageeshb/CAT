@@ -1,0 +1,55 @@
+<div id="test-pane">
+	
+	<div class="row-fluid">
+		<div id="test-menu">
+			<%= link_to "Create Test", new_test_suite_test_path, remote: true, class: 'btn btn-primary' %>
+		</div>
+	</div>
+	<br>
+	<div class="row-fluid" id="notice">
+		<% flash.each do |name, msg| %>
+		    <div class="alert alert-<%= name %>"> 
+		        <button type="button" class="close" data-dismiss="alert">&times;</button>
+		        <%= msg %>
+		    </div>
+		<% end %>
+	</div>
+	
+	<div class="row-fluid">
+		<div id="test-list">
+			<% if @tests.size>0 then %>
+			<table class="table table-bordered table-hover ">
+				<tr class="info">
+					<td>Id</td>
+					<td>Test Name</td>
+					<td>Test Description</td>
+					<td>Test Steps</td>
+					<td>Edit</td>
+					<td>Delete</td>
+					<td>Execute</td>
+				</tr>
+				<% @tests.each do |t| %>
+					<tr id="<%= t.id %>">
+						<td><%= t.id %></td>
+						<td><%= t.name %></td>
+						<td><p class="desc"><%= t.description %></p></td>
+						<td>
+							<div><%= link_to "Create Test Step", new_test_test_step_path(test_id: t.id), remote: true, class: 'btn btn-primary' %></div>
+							<% t.test_steps.each do |ts| %>
+								<div id="ts-<%= ts.id %>"><%= link_to ts.name, test_test_step_path(test_id: t.id, id: ts.id), remote: true, class: 'btn btn-link' %></div>
+							<% end %>
+						</td>
+						<td><%= link_to "", edit_test_suite_test_path(id: t.id), remote: true , class: 'icon-pencil' %></td>
+						<td><%= link_to "", test_suite_test_path(id: t.id), method: :delete, :remote => true, data: { confirm: "Are you sure you want to delete test suite \'#{t.name}\'?" }, class:'icon-trash' %></td>
+						<td><%= link_to "", '#', class: 'icon-wrench' %></td>
+					</tr>
+				<% end %>
+			</table>
+			<% end %>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div id="test-step-list">
+		</div>
+	</div>
+</div>

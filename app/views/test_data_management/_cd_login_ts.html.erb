@@ -1,0 +1,27 @@
+<%= form_for(@login_td, url: create_login_td_path) do |f| %>
+  <% if @login_td.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@login_td.errors.count, "error") %> prohibited this profile from being saved:</h2>
+      <ul>
+      <% @login_td.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+  </div>
+  <% end %>
+  
+  <p>
+  	<%= f.label :email %>
+  	<%= f.text_field :email %>
+  </p>
+  <p>
+  	<%= f.label :password %>
+  	<%= f.text_field :password %>
+  </p>
+  <p>
+  	<%= f.label :check %>
+  	<%= f.text_field :check %>
+  </p>
+
+      <%= f.submit 'Create',  class:'btn btn-primary radius' %>
+<% end %>

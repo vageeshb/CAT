@@ -1,0 +1,2 @@
+$('#notice').html("<%= escape_javascript render 'layouts/flash' %>");
+$('#main-area').replaceWith("<%= escape_javascript render(file: 'selenium_configs/index.html.haml') %>");

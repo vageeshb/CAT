@@ -1,0 +1,10 @@
+.row-fluid
+	#menu-tab.span2
+		%ul.nav.nav-pills.nav-stacked.bs-docs-sidenav.affix
+			%li= link_to "View Reports", report_view_path, remote: true, id: 'report_view_link'
+			%li
+				#rep-list-options
+	.span10
+		#display-tab.well
+			#tab-content
+				You can view the execution reports here!

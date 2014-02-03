@@ -1,0 +1,31 @@
+.row-fluid
+  .row-fluid
+    = render 'layouts/flash'
+  .row-fluid
+    = form_for(@test_suite, remote: true) do |f|
+      - if @test_suite.errors.any?
+        #error_explanation.alert.alert-error
+          = pluralize(@test_suite.errors.count, "error")
+          prohibited this test suite from being saved:
+          %ul
+            - @test_suite.errors.full_messages.each do |msg|
+              %li= msg
+      .row-fluid
+        %p
+          = f.hidden_field :user_id, value: current_user.id
+      .row-fluid
+        %p
+        .span2
+          = f.label :name
+        .span4
+          = f.text_field :name
+      .row-fluid
+        %p
+        .span2
+          = f.label :description
+        .span4
+          = f.text_area :description
+      .row-fluid
+        %p
+        .span3.offset2
+          = f.submit  class:'btn btn-primary'

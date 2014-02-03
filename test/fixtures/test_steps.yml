@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  step_name: MyString
+  step_description: MyText
+  expected: MyString
+  object_repository_id: 1
+  page_name: MyString
+  element_id: 1
+  function: MyString
+  value: MyString
+  test_id: 1
+
+two:
+  step_name: MyString
+  step_description: MyText
+  expected: MyString
+  object_repository_id: 1
+  page_name: MyString
+  element_id: 1
+  function: MyString
+  value: MyString
+  test_id: 1

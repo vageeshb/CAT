@@ -1,0 +1,4 @@
+$('#createTS_link').parent().addClass("active");
+$('#viewTS_link').parent().removeClass("active");
+$('#ts-list-options').hide();
+$('#tab-content').replaceWith("<%= escape_javascript render(file: 'test_suites/new.html.erb') %>");

@@ -1,0 +1,44 @@
+<div id="display-area">
+	<div class="row-fluid"><span class="label label-info">Object Repository for '<%= @object_repository.name %>'</span></div>
+	<br>
+	<div id="menu-bar" class="row-fluid">
+		<div class="btn-group">
+			<%= link_to "Create Web Element", new_object_repository_web_element_path(@object_repository.id), remote: true, class: 'btn btn-primary btn-small' %>
+		</div>
+	</div>
+	<br>
+	<%= render 'layouts/flash' %>
+	<div class="row-fluid" id="or-contents">
+		<table class="table table-bordered table-hover ">
+		    <tr class="info">
+		      <td>S.No</td>
+		      <td>Page Name</td>
+		      <td>Element Name</td>
+		      <td>Element Type</td>
+		      <td>Identifier Name</td>
+		      <td>Identifier Value</td>
+		      <td>Edit</td>
+		      <td>Delete</td>
+		    </tr>
+		    
+		    <% if @web_elements.size==0 then %>
+		    <tr>
+		      <td colspan="8">No Web Elements found!</td>
+		    </tr>
+		    <% else %>
+		      <% @web_elements.each do |f| %>
+		        <tr id="we_<%= f.id %>">
+		          <td><%= f.id %></td>
+		          <td><%= f.page_name %></td>
+		          <td><%= f.element_name %></td>
+		          <td><%= f.element_type %></td>
+		          <td><%= f.identifier_name %></td>
+		          <td><%= f.identifier_value %></td>
+		          <td><%= link_to "", edit_object_repository_web_element_path(id: f.id, object_repository_id: f.object_repository_id),:remote => true, :id => 'edit_object_repository_link', class: 'btn btn-small icon-pencil' %></td>
+		          <td><%= link_to "", object_repository_web_element_path(id: f.id, object_repository_id: f.object_repository_id), method: :delete, :remote => true, data: { confirm: "Are you sure you want to delete \'#{f.element_name}\'?" }, class: 'btn btn-small icon-trash' %></td>
+		        </tr>
+		      <% end %>
+		    <% end %>
+		  </table>
+	</div>
+</div>

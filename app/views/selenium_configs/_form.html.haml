@@ -1,0 +1,20 @@
+#tab-content
+  = form_for @selenium_config, remote: true do |f|
+    - if @selenium_config.errors.any?
+      #error_explanation.alert.alert-error
+        %h4= "#{pluralize(@selenium_config.errors.count, "error")} prohibited this selenium_config from being saved:"
+        %ul
+          - @selenium_config.errors.full_messages.each do |msg|
+            %li= msg
+    = f.hidden_field :user_id, value: current_user.id
+    .row-fluid
+      .span3.offset1= f.label :browser
+      .span6= f.select :browser, ['Firefox','Internet Explorer','Safari','Chrome']
+    .row-fluid
+      .span3.offset1= f.label :url
+      .span6
+        .input-prepend
+          %span.add-on http://
+          = f.text_field :url
+    .row-fluid
+      .span3.offset4= f.submit 'Update',class:'btn btn-primary radius', id:'config-save'

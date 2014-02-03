@@ -1,0 +1,9 @@
+
+Displayed: User Name
+
+Displayed: Password
+
+Displayed: Login Button
+
+Assertion: Success
+Found 'Invalid credentials' on the page

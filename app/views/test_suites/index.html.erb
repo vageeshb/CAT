@@ -1,0 +1,16 @@
+<div class="row-fluid">
+	<div id="menu-tab" class="span2">
+		<ul class="nav nav-pills nav-stacked bs-docs-sidenav affix">
+			<li><%= link_to "Create Test Suites", new_test_suite_path(@test_suite, :format => :js), remote: true, id: 'createTS_link' %></li>
+			<li><%= link_to "View Test Suites", test_suites_path(:format => :js), remote:true, id:'viewTS_link' %></li>
+			<li><div id="ts-list-options"></div></li>
+		</ul>
+	</div>
+	<div class="span10">
+		<div id="display-tab" class="well">
+			<div id="tab-content">
+				You can create and manage your test suites, tests and test steps over here!
+			</div>
+		</div>
+	</div>
+</div>

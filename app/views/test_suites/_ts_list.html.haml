@@ -1,0 +1,6 @@
+%ul.nav.nav-list.nav-stacked#ts-list-options
+	%li.divider
+	- TestSuite.where(:user_id => current_user.id).to_a.each do |ts|
+		%li.dropdown
+			= link_to raw("#{ts.name}<i class='icon-chevron-right pull-right'></i>"), test_suite_path(ts), :remote => true, id: "ts_list_option_#{ts.id}"
+			%div{id: "ts_test_list_#{ts.id}"}

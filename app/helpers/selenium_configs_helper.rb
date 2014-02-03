@@ -1,0 +1,2 @@
+module SeleniumConfigsHelper
+end

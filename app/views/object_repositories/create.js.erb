@@ -1,0 +1,4 @@
+$('#new_object_repository_link').parent().addClass("active");
+$('#view_object_repository_link').parent().removeClass("active");
+$("#list_options").hide();
+$('#display-area').replaceWith("<%= escape_javascript render(file: 'object_repositories/create.html.erb') %>");

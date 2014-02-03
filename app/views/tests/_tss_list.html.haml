@@ -1,0 +1,4 @@
+%ul.nav.nav-list.nav-stacked{id: "#ts_test_list_#{@test_suite.id}"}
+	- @test_suite.tests.all.each do |ts|
+		%li.dropdown
+			= link_to raw("#{ts.name}"), test_suite_test_path(@test_suite.id,ts.id), :remote => true, id: "ts_t_list_option_#{ts.id}"

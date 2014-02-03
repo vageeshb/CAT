@@ -1,0 +1,31 @@
+<%= form_for([@test_suite,@test], remote: true) do |f| %>
+    <% if @test.errors.any? %>
+    	<div id="error_explanation" class="alert alert-error">
+    	<button type="button" class="close" data-dismiss="alert">&times;</button>
+      	<%= pluralize(@test.errors.count, "error") %> prohibited this test from being saved:
+	      <ul>
+	      <% @test.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
+	      </ul>
+	  	</div>
+  	<% end %>
+  	<div class="row-fluid">
+  		<div class="span3">
+  			<%= f.label :name %>
+  		</div>
+  		<div class="span3">
+  			<%= f.text_field :name %>
+  		</div>
+  	</div>
+    
+    <div class="row-fluid">
+  		<div class="span3">
+  			<%= f.label :description %>
+  		</div>
+  		<div class="span3">
+  			<%= f.text_area :description %>
+  		</div>
+  	</div>
+    <%= f.submit class:'btn btn-primary' %>
+<% end %>

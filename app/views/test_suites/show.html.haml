@@ -1,0 +1,33 @@
+#tab-content
+	.row-fluid
+		%span Test Cases in
+		%span.label.label-info= "#{@test_suite.name}"
+	%br
+	#menu-bar.row-fluid
+		.btn-group
+			= link_to "Create Test",new_test_suite_test_path(@test_suite.id), remote: true, class: 'btn btn-primary btn-small'
+	%br
+	= render(:partial => "layouts/flash")
+	.row-fluid#test-contents
+		%table.table.table-bordered.table-hover
+			%tbody
+				%tr.info
+					%td Test Name
+					%td Test Description
+					%td Test Priority
+					%td Test Status
+					%td Last Run
+					%td{colspan: 3, style: 'text-align: center;'} Options
+				- if @test_suite.tests.count==0 then 
+					%tr
+						%td{colspan:'6'} There are no tests!
+				- @tests.each do |t|
+					%tr{id: "tr_#{t.id}"}
+						%td= link_to "#{t.name}", test_suite_test_path(@test_suite.id, t.id), remote: true
+						%td= "#{t.description}"
+						%td 
+						%td= "#{t.status}"
+						%td= "#{t.last_run.strftime("%d-%m-%Y at %H:%M:%S")}"
+						%td= link_to "", edit_test_suite_test_path(@test_suite.id, t.id),remote: true, class: 'btn btn-small icon-pencil'
+						%td= link_to "", test_suite_test_path(@test_suite.id, t.id), method: :delete, confirm: "Are you sure you want to delete test \'#{t.name}\'?", remote: true,class: 'btn btn-small icon-trash'
+						%td= link_to "", exec_test_path(test_id: t.id), remote: true, id: "exec_#{t.id}"  , class: 'btn btn-small icon-wrench'

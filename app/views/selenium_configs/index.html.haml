@@ -1,0 +1,8 @@
+.row-fluid
+	#menu-tab.span2
+		%ul.nav.nav-pills.nav-stacked.bs-docs-sidenav.affix
+			%li= link_to "Set Configuration", new_selenium_config_path(@sel_config, :format => :js),:remote => true, :id => 'new_sel_config_link'
+			%li
+	.span10.row-fluid
+		.well
+			#tab-content You can create and manage your testing configurations over here!
