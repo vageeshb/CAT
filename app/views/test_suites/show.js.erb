@@ -1,3 +1,0 @@
-$("#ts-list-options").replaceWith("<%= escape_javascript render('test_suites/ts_list') %>");
-$('#ts_list_option_<%= escape_javascript "#{@test_suite.id}" %>').parent().addClass("active-cust");
-$("#tab-content").replaceWith("<%= escape_javascript render(file: 'test_suites/show.html.haml') %>");

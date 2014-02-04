@@ -1,6 +1,0 @@
-<ul class='nav nav-list nav-stacked' id='list_options'>
-	<li class='divider'></li>
-	<% ObjectRepository.all.each do |o| %>
-		<li class="active-cust"><%= link_to raw("#{o.name}<i class='icon-chevron-right pull-right'></i>"), object_repository_path(o), :remote => true, id: "list_option_#{o.id}" %></li>
-	<% end %>
-</ul>
