@@ -1,0 +1,16 @@
+.span3
+  %ul.nav.nav-pills.nav-stacked
+    %li.active
+      %a{"data-toggle" => "tab", :href => "#CreateLogin"} Login Test Suite
+    %li
+      %a{"data-toggle" => "tab", :href => "#CreateMessage"} Messages Test Suite
+    %li
+      %a{"data-toggle" => "tab", :href => "#Createxyz"} XYZ Test Suite
+.span9
+  .tab-content
+    #CreateLogin.tab-pane.active
+      = render 'cd_login_ts'
+    #CreateMessage.tab-pane
+      The test suite auto-fetches valid credentials from 'Login Test Suite' data
+    #Createxyz.tab-pane
+      Placeholder for adding more create data for test suites

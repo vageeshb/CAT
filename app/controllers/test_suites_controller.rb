@@ -27,12 +27,12 @@ class TestSuitesController < ApplicationController
       flash.now[:success]="Test Suite #{@test_suite.name} created!"
       respond_to do |wants|
         wants.html { }
-        wants.js { render 'index.js.erb'}
+        wants.js { render 'index.js.haml'}
       end
     else
       respond_to do |wants|
         wants.html { }
-        wants.js { render 'new.js.erb'}
+        wants.js { render 'new.js.haml'}
       end
     end
   end
@@ -49,7 +49,7 @@ class TestSuitesController < ApplicationController
       respond_to do |wants|
         flash.now[:success] = "Test Suite updated successfully."
         wants.html {  }
-        wants.js { render 'index.js.erb'}
+        wants.js { render 'index.js.haml'}
       end
     end
   end
@@ -74,7 +74,7 @@ class TestSuitesController < ApplicationController
     TestWorker.perform_async(@test_id, @user_id)
     respond_to do |wants|
        wants.html {  }
-       wants.js { render 'summary.js.erb' }
+       wants.js { render 'summary.js.haml' }
     end
   end
   private

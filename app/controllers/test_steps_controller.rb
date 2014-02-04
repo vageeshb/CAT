@@ -24,13 +24,13 @@ class TestStepsController < ApplicationController
 			flash.now[:success]="Test Step: \'#{@test_step.step_name}\' successfully created!"
 			respond_to do |wants|
 				wants.html { }
-				wants.js { render 'tests/show.js.erb'}
+				wants.js { render 'tests/show.js.haml'}
 			end
 		else
 			
 			respond_to do |wants|
 				wants.html { }
-				wants.js { render 'new.js.erb' }
+				wants.js { render 'new.js.haml' }
 			end
 			
 		end
@@ -48,7 +48,7 @@ class TestStepsController < ApplicationController
 	      		@test_steps=@test.test_steps.all.to_a
 		        flash.now[:success] = "Test Step \'#{@test_step.step_name}\' was successfully updated."
 		        format.html { }
-		        format.js { render 'tests/show.js.erb'}
+		        format.js { render 'tests/show.js.haml'}
 			else
 		        format.html { render action: 'edit' }
 		        format.js {  }
@@ -89,10 +89,16 @@ class TestStepsController < ApplicationController
 		@functions["Select a Function"]=""
 		@web_element=WebElement.where(object_repository_id: @or,element_name:@el, page_name:@pg).first
 		case @web_element.element_type
-		when 'Text Box'
-			@functions["Enter Value"]="Enter Value"
-		when 'Button'
-			@functions["Click"]="Click"
+			when 'Text Box'
+				@functions["Enter Value"]="Enter Value"
+			when 'Select Box'
+				@functions["Click"]="Click"
+			when 'Option Box'
+				@functions["Select Option"]="Select Option"
+			when 'Link'
+				@functions["Click"]="Click"
+			when 'Button'
+				@functions["Click"]="Click"
 		end
 	end
 	private

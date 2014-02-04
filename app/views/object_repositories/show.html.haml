@@ -1,0 +1,33 @@
+#display-area
+  .row-fluid
+    %span.label.label-info
+      Object Repository for '#{@object_repository.name}'
+  %br/
+  #menu-bar.row-fluid
+    .btn-group
+      = link_to "Create Web Element", new_object_repository_web_element_path(@object_repository.id), remote: true, class: 'btn btn-primary btn-small'
+  %br/
+  = render 'layouts/flash'
+  #or-contents.row-fluid
+    %table.table.table-bordered.table-hover
+      %tr.info
+        %td Page Name
+        %td Element Name
+        %td Element Type
+        %td Identifier Name
+        %td Identifier Value
+        %td Edit
+        %td Delete
+      - if @web_elements.size==0 then
+        %tr
+          %td{:colspan => "8"} No Web Elements found!
+      - else
+        - @web_elements.each do |f|
+          %tr{:id => "we_#{f.id}"}
+            %td= f.page_name
+            %td= f.element_name
+            %td= f.element_type
+            %td= f.identifier_name
+            %td= f.identifier_value
+            %td= link_to "", edit_object_repository_web_element_path(id: f.id, object_repository_id: f.object_repository_id),:remote => true, :id => 'edit_object_repository_link', class: 'btn btn-small icon-pencil'
+            %td= link_to "", object_repository_web_element_path(id: f.id, object_repository_id: f.object_repository_id), method: :delete, :remote => true, data: { confirm: "Are you sure you want to delete \'#{f.element_name}\'?" }, class: 'btn btn-small icon-trash'

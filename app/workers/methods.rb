@@ -19,14 +19,20 @@ class Methods
 			case web_element.identifier_name
 				when 'ID'
 					e = find(:id => web_element.identifier_value)
-				when 'CLASS'
-					e = find(:class => web_element.identifier_value) 
+				when 'Class'
+					e = find(:class => web_element.identifier_value)
+				when 'Tag Name'
+					e = find(:tag_name => web_element.identifier_value)
+				when 'Link Text'
+					e = find(:link_text => web_element.identifier_value)
+				when 'Partial Link Text'
+					e = find(:partial_link_text => web_element.identifier_value)
 				when 'CSS'
-					e = find(:css => web_element.identifier_value) 
-				when 'NAME'
-					e = find(:name => web_element.identifier_value) 
+					e = find(:css => web_element.identifier_value)
 				when 'XPATH'
-					e = find(:xpath => web_element.identifier_value) 
+					e = find(:xpath => web_element.identifier_value)
+				#when 'JavaScript'
+					# To do
 			end
 			if !e.nil? then
 				log << ("\n'" + web_element.element_name.to_s + "' Presence: True")
@@ -34,6 +40,9 @@ class Methods
 					when 'Click'
 						e.send_keys :return
 						log << ("\nAction: Click")
+					when 'Select Option'
+						e.send_keys :return
+						log << ("\nAction: Selected option")
 					when 'Enter Value'
 						e.send_keys(value)
 						log << ("\nAction: Enter Value - #{value}")
@@ -41,11 +50,8 @@ class Methods
 			else
 				raise "\nCould not find element #{e.element_name}"
 			end
-
 			return log, "Pass"
-
 		rescue Exception => e
-			
 			log << e.message
 			return log, "Fail"
 		end
@@ -81,5 +87,4 @@ class Methods
 		    @wait.until { @driver.find_element hash }
 		    @driver.find_element hash
 		end
-
 end

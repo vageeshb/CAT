@@ -1,0 +1,19 @@
+= form_for(@login_td, url: create_login_td_path) do |f|
+  - if @login_td.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@login_td.errors.count, "error")
+        prohibited this profile from being saved:
+      %ul
+        - @login_td.errors.full_messages.each do |msg|
+          %li= msg
+  %p
+    = f.label :email
+    = f.text_field :email
+  %p
+    = f.label :password
+    = f.text_field :password
+  %p
+    = f.label :check
+    = f.text_field :check
+  = f.submit 'Create',  class:'btn btn-primary radius'

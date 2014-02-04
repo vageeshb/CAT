@@ -1,0 +1,14 @@
+%h3 Test Data Management
+.row-responsive
+  .span2
+    %ul.nav.nav-pills.nav-stacked
+      %li.active
+        %a{"data-toggle" => "tab", :href => "#ViewData"} View Data
+      %li
+        %a{"data-toggle" => "tab", :href => "#CreateData"} Create Data
+  .span10
+    .tab-content
+      #ViewData.tab-pane.active
+        = render 'view_data'
+      #CreateData.tab-pane
+        = render 'create_data'

@@ -1,0 +1,49 @@
+.row-fluid
+  = form_for([@object_repository,@web_element], :format => :js,remote: true, :html => {class:'form-inline'}) do |f|
+    - if @web_element.errors.any?
+      #error_explanation.alert.alert-error
+        = pluralize(@web_element.errors.count, "error")
+        prohibited this Web element from being saved:
+        %ul
+          - @web_element.errors.full_messages.each do |msg|
+            %li= msg
+    .row-fluid
+      %p
+      .span2
+        = f.label :page_name
+      .span6
+        = f.text_field :page_name
+    .row-fluid
+      %p
+      .span2
+        = f.label :element_name
+      .span6
+        = f.text_field :element_name
+    .row-fluid
+      %p
+      .span2
+        = f.label :element_type
+      .span6
+        = f.select :element_type, [['Text Box'],['Select Box'], ['Option Box'],['Link'],['Button']]
+    .row-fluid
+      %p
+      .span2
+        = f.label :identifier_name
+      .span6
+        = f.select :identifier_name, [['ID'],['Class'],['Tag Name'],['Link Text'],['Partial Link Text'],['CSS'],['XPATH'],['JavaScript']]
+        %span.help-inline
+          %a{"data-toggle" => "tooltip", :href => "#", :title => "This will define Selenium locating function type"}
+            %i.icon-question-sign
+    .row-fluid
+      %p
+      .span2
+        = f.label :identifier_value
+      .span6
+        = f.text_field :identifier_value
+        %span.help-inline
+          %a{"data-toggle" => "tooltip", :href => "#", :title => "This will define Selenium locator value"}
+            %i.icon-question-sign
+    .row-fluid
+      %p
+      .span2.offset2
+        = f.submit class:'btn btn-primary radius'

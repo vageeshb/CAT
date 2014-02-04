@@ -4,5 +4,5 @@ class ObjectRepository < ActiveRecord::Base
 	has_many :web_elements, dependent: :destroy
 	belongs_to :user
 
-	validates_presence_of :name, :description, :url
+	validates_presence_of :name, :description
 end

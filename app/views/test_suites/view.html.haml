@@ -1,0 +1,24 @@
+#tab-content
+  = render(:partial => "layouts/flash")
+  #ts-list.row-fluid
+    %h4#menu-bar Test Suites Avaliable:
+    %table#view_table.table.table-bordered.table-hover
+      %tr.info
+        %td Name
+        %td Description
+        %td Number of TCs
+        %td{:colspan => "3", :style => "text-align:center;"} Options
+      - if !(@test_suites.size==0) then
+        - @test_suites.each do |f|
+          %tr{:id => "test_suite_#{f.id}"}
+            %td= link_to "#{f.name}", test_suite_path(f, :format => :js), remote:true
+            %td= f.description
+            %td= f.tests.count
+            %td= link_to "", edit_test_suite_path(id: f.id), remote:true, class: 'btn btn-small icon-pencil'
+            %td= link_to "", test_suite_path(id: f.id), method: :delete, remote: true,data: {confirm: "Are you sure you want to delete test suite \'#{f.name}\'?"}, class: 'btn btn-small icon-trash'
+            %td
+              .btn.btn-small.icon-wrench.disabled
+      - else
+        %tr
+          %td{:colspan => "6"} There are no test suites!
+  #test-list.row-fluid

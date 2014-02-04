@@ -1,0 +1,20 @@
+= form_for([@test_suite,@test], remote: true) do |f|
+  - if @test.errors.any?
+    #error_explanation.alert.alert-error
+      %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+      = pluralize(@test.errors.count, "error")
+      prohibited this test from being saved:
+      %ul
+        - @test.errors.full_messages.each do |msg|
+          %li= msg
+  .row-fluid
+    .span3
+      = f.label :name
+    .span3
+      = f.text_field :name
+  .row-fluid
+    .span3
+      = f.label :description
+    .span3
+      = f.text_area :description
+  = f.submit class:'btn btn-primary'

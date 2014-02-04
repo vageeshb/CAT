@@ -13,7 +13,7 @@ class TestsController < ApplicationController
 		@test_steps=@test.test_steps
 		respond_to do |wants|
 			wants.html {  }
-			wants.js { render 'show.js.erb'  }
+			wants.js { render 'show.js.haml'  }
 		end
 	end
 	def index
@@ -37,12 +37,12 @@ class TestsController < ApplicationController
 			flash.now[:success]="Test Name: \'#{@test.name}\' successfully created!"
 			respond_to do |wants|
 				wants.html { }
-				wants.js { render 'test_suites/show.js.erb' }
+				wants.js { render 'test_suites/show.js.haml' }
 			end
 		else
 			respond_to do |wants|
 				wants.html { }
-				wants.js { render 'new.js.erb' }
+				wants.js { render 'new.js.haml' }
 			end
 			
 		end
@@ -60,7 +60,7 @@ class TestsController < ApplicationController
 	      	@tests=@test_suite.tests.all.to_a
 	        flash.now[:success] = "Test \'#{@test.name}\' was successfully updated."
 	        format.html {  }
-	        format.js { render 'test_suites/show.js.erb'}
+	        format.js { render 'test_suites/show.js.haml'}
 	      else
 	        format.html {  }
 	        format.js {  }
@@ -80,7 +80,7 @@ class TestsController < ApplicationController
 				flash.now[:notice]="No Tests Found for #{@test_suite.name}"
 				respond_to do |wants|
 					wants.html {  }
-					wants.js { render 'index.js.erb' }
+					wants.js { render 'index.js.haml' }
 				end
 			end
 	end
@@ -90,7 +90,7 @@ class TestsController < ApplicationController
 		TestStepWorker.perform_async(@test_step_id,@user_id)
 	    respond_to do |wants|
 	       wants.html {  }
-	       wants.js { render 'summary.js.erb' }
+	       wants.js { render 'summary.js.haml' }
 	    end
 	end
 	private

@@ -1,0 +1,22 @@
+#display-area.row-fluid
+  .row-fluid
+    %h4#menu-bar Object Repositories:
+  = render 'layouts/flash'
+  %table.table.table-bordered.table-hover
+    %tr.info
+      %td Name
+      %td Description
+      %td Url
+      %td Edit
+      %td Delete
+    - if @object_repositories.size==0 then
+      %tr
+        %td{:colspan => "6"} No Object repository found!
+    - else
+      - @object_repositories.each do |f|
+        %tr
+          %td= link_to f.name, object_repository_path(f), :remote => true, id: "show_#{f.id}_link"
+          %td= f.description
+          %td= f.url
+          %td= link_to "", edit_object_repository_path(f, :format => :js),:remote => true, :id => 'edit_object_repository_link', class: 'btn btn-small icon-pencil'
+          %td= link_to "", object_repository_path(f), method: :delete, :remote => true, data: { confirm: "Are you sure you want to delete \'#{f.name}\'?" }, class:  'btn btn-small icon-trash'

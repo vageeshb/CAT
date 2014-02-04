@@ -24,10 +24,10 @@ class SeleniumConfigsController < ApplicationController
       if @selenium_config.save
         flash.now[:success]="Configuration Saved!"
         format.html {}
-        format.js { render 'index.js.erb' }
+        format.js { render 'index.js.haml' }
       else
         format.html {  }
-        format.js { render 'new.js.erb' }
+        format.js { render 'new.js.haml' }
       end
     end
   end
@@ -39,10 +39,10 @@ class SeleniumConfigsController < ApplicationController
       if @selenium_config.update(selenium_config_params)
         flash.now[:success]="Configuration updated successfully!"
         format.html {}
-        format.js { render 'index.js.erb' }
+        format.js { render 'index.js.haml' }
       else
         format.html {}
-        format.js { render 'new.js.erb'  }
+        format.js { render 'new.js.haml'  }
       end
     end
   end

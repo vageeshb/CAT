@@ -36,7 +36,10 @@
 						%td= "#{t.function}"
 						%td= "#{t.value}"
 						%td= "#{t.status}"
-						%td= "#{t.last_run.strftime("%d-%m-%Y at %H:%M:%S")}"
+						- if t.last_run
+							%td= "#{t.last_run.strftime("%d-%m-%Y at %H:%M:%S")}"
+						- else
+							%td No Run
 						%td= link_to "", edit_test_test_step_path(@test.id,t.id),remote: true, class: 'btn btn-small icon-pencil'
 						%td= link_to "", test_test_step_path(@test.id,t.id), method: :delete, data: {confirm: "Are you sure you want to delete test step \'#{t.step_name}\'?"}, remote: true,class: 'btn btn-small icon-trash'
 						%td= link_to "", exec_test_step_path(test_step_id: t.id), remote: true, class: 'btn btn-small icon-wrench'

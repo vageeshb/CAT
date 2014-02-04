@@ -17,7 +17,7 @@ class ObjectRepositoriesController < ApplicationController
   def new
     @object_repository = ObjectRepository.new
     respond_to do |format|
-      format.js { render 'create.js.erb' }
+      format.js { render 'create.js.haml' }
     end
   end
 
@@ -42,12 +42,12 @@ class ObjectRepositoriesController < ApplicationController
         respond_to do |format|
           flash.now[:success] = 'Object repository was successfully created.'
           format.html { redirect_to @object_repository, notice: 'Object repository was successfully created.' }
-          format.js { render 'index.js.erb'}
+          format.js { render 'index.js.haml'}
         end
       else
         respond_to do |format|
           format.html { render action: 'new' }
-          format.js { render 'create.js.erb' }
+          format.js { render 'create.js.haml' }
         end
     end
   end
@@ -60,10 +60,10 @@ class ObjectRepositoriesController < ApplicationController
         @object_repositories=ObjectRepository.where(:user_id => current_user.id).to_a
         flash.now[:success] = 'Object repository was successfully updated.'
         format.html { redirect_to @object_repository, notice: 'Object repository was successfully updated.' }
-        format.js { render 'index.js.erb'}
+        format.js { render 'index.js.haml'}
       else
         format.html { render action: 'edit' }
-        format.js { render 'fail_create.js.erb' }
+        format.js { render 'fail_create.js.haml' }
       end
     end
   end
@@ -77,7 +77,7 @@ class ObjectRepositoriesController < ApplicationController
     respond_to do |format|
       flash.now[:success] = "Object repository \'#{@object_repository.name}\' was successfully deleted."
       format.html { }
-      format.js { render 'index.js.erb' }
+      format.js { render 'index.js.haml' }
     end
   end
   private

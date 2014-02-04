@@ -1,0 +1,20 @@
+#tab-content.bg-custom
+  .row-fluid
+    .span3 Name:
+    .span3= @test_step.name
+  .row-fluid
+    .span3 Description:
+    .span3= @test_step.description
+  .row-fluid
+    .span3 Object Repository:
+    .span3= @test_step.object_repository_id
+  .row-fluid
+    .span3 Function:
+    .span3= @test_step.function
+  .row-fluid
+    .span3 Value:
+    .span3= @test_step.value
+  .row-fluid
+    .span3= link_to "Update Test Step", edit_test_test_step_path(id: @test_step.id), :remote => true, class:'btn btn-primary'
+    .span3= link_to "Delete Test Step", test_test_step_path(id: @test_step.id), method: :delete, :remote => true, data: { confirm: "Are you sure you want to delete #{@test_step.name}?" }, class:'btn btn-primary'
+  %br/

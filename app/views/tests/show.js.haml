@@ -1,0 +1,2 @@
+$('#ts_test_list_#{"#{@test_suite.id}"}').replaceWith("#{escape_javascript render('tests/tss_list')}");
+$('#tab-content').replaceWith("#{escape_javascript render(file: 'tests/show.html.haml')}");

@@ -19,7 +19,7 @@ APA::Application.routes.draw do
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signup', to: 'users#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'get'
-  match '/or', to: 'object_repositories#index', via: 'get'
+  match '/obj_repo', to: 'object_repositories#index', via: 'get'
   match '/home', to: 'menus#home', via:'get'
   match '/configuration', to: 'selenium_configs#index', via: 'get'
   match '/exec_test', to: 'test_suites#exec_test', via: 'get'

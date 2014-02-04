@@ -1,0 +1,101 @@
+= form_for([@test,@test_step], remote: true) do |f|
+  - if @test_step.errors.any?
+    #error_explanation.alert.alert-error
+      %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+      = pluralize(@test_step.errors.count, "error")
+      prohibited this test from being saved:
+      %ul
+        - @test_step.errors.full_messages.each do |msg|
+          %li= msg
+  %div= hidden_field_tag :test_suite_id, @test_suite.id
+  .row-fluid
+    %h4 Information:
+  .row-fluid
+    .span3
+      = f.label :step_name
+    .span3
+      = f.text_field :step_name
+  .row-fluid
+    .span3
+      = f.label :step_description
+    .span3
+      = f.text_area :step_description
+  .row-fluid
+    .span3
+      = f.label :expected
+    .span3
+      = f.text_field :expected
+  .row-fluid
+    %h4 Web Element:
+  .row-fluid
+    .row-fluid
+      .span3
+        = f.label :object_repository_id, "Object Repository"
+      .span3
+        = f.select(:object_repository_id, options_for_select(@or_options),{prompt: "Select an Object Rep"}, id: 'or_select')
+    .row-fluid
+      .span3
+        = f.label :page_name
+      .span3
+        = f.select(:page_name,"",{prompt: ""}, id: 'page_select')
+    .row-fluid
+      .span3
+        = f.label :element_id, "Element Name"
+      .span3
+        = f.select(:element_id, "",{prompt: ""}, id: 'element_select')
+    .row-fluid
+      .span3
+        = f.label :function
+      .span3
+        = f.select(:function, "",{prompt: ""}, id: 'function_select')
+    .row-fluid
+      .span3
+        = f.label :value
+      .span3
+        = f.text_field :value
+  = f.submit  class:'btn btn-primary'
+:javascript
+  $(document).ready(function() {
+    $('#page_select').prop('disabled', true);
+    $('#element_select').prop('disabled', true);
+    $('#function_select').prop('disabled', true);
+    $('#test_step_value').prop('disabled',true);
+    $('#or_select').change(function() {
+      $.ajax({
+        url: "#{update_pages_path}",
+        data: {
+          or_id : $('#or_select').val()
+        },
+        dataType: "script"
+      });
+    });
+    $('#page_select').change(function() {
+      $.ajax({
+        url: "#{update_elements_path}",
+        data: {
+          or_id : $('#or_select').val(),
+          pg_name : $("#page_select option:selected").html(),
+        },
+        dataType: "script"
+      });
+    });
+    $('#element_select').change(function() {
+      $.ajax({
+        url: "#{update_function_path}",
+        data: {
+          or_id : $('#or_select').val(),
+          pg_name : $("#page_select option:selected").html(),
+          el_name : $("#element_select option:selected").html()
+        },
+        dataType: "script"
+      });
+    });
+    $('#function_select').change(function() {
+      if ($('#function_select').val() == 'Click') {
+        $('#test_step_value').prop('disabled',true);
+      }
+      else {
+       $('#test_step_value').prop('disabled',false); 
+      }
+    });
+  });

@@ -1,0 +1,12 @@
+.row-fluid
+  .span2
+    %ul.nav.nav-pills.nav-stacked.bs-docs-sidenav.affix
+      %li= link_to "Create Obj Repo", new_object_repository_path(@object_repository, :format => :js),:remote => true, :id => 'new_object_repository_link'
+      %li#view_or_tab
+        = link_to "View Obj Repo", object_repositories_path(:format => :js),:remote => true, :id => 'view_object_repository_link'
+      %li#view_or_tab_list
+        #list_options
+  .span10
+    #tab-content.well.well-large
+      #display-area.row-fluid
+        You can create and manage your Object Repositories and Web Elements over here!

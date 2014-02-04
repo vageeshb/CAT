@@ -25,11 +25,11 @@ class SelConfigController < ApplicationController
 			@sel_config.save
 			flash.now[:success]="Configuration Saved!"
 			respond_to do |format|
-				format.js { render 'index.js.erb'}
+				format.js { render 'index.js.haml'}
 			end
 		else
 			respond_to do |format|
-				format.js { render 'new.js.erb'}
+				format.js { render 'new.js.haml'}
 			end
 		end
 	end
@@ -42,10 +42,10 @@ class SelConfigController < ApplicationController
 	    respond_to do |format|
 	      if @sel_config.update(new_config_params)
 	        flash.now[:success] = 'Configuration was successfully updated.'
-	        format.js { render 'index.js.erb'}
+	        format.js { render 'index.js.haml'}
 	      else
 	        format.html { render action: 'edit' }
-	        format.js { render 'fail_create.js.erb' }
+	        format.js { render 'fail_create.js.haml' }
 	      end
     	end
   	end

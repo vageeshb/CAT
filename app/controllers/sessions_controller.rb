@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
 		else
 			respond_to do |wants|
 				wants.html {  }
-				wants.js { render 'sessions/fail.js.erb'}
+				wants.js { render 'sessions/fail.js.haml'}
 			end
       		
 		end

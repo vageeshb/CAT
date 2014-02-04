@@ -1,0 +1,28 @@
+= render 'layouts/flash'
+.hero-unit
+  .text-center
+    %h1{:style => "color: #336699;"} On-Demand Automation Testing Framework
+    %h2
+      Using
+      = succeed "lenium" do
+        %span{:style => "color: #cc0000;"} Se
+      on
+      = succeed "ils" do
+        %span{:style => "color: #cc0000;"} Ra
+= image_tag('sel-logo.png', class: 'block1')
+= image_tag('rails-logo.png', class: 'block2')
+%br/
+%br/
+%br/
+%br/
+:javascript
+  $( ".block1" ).animate({
+  	left: ($(window).width()/2 - 100)
+  	}, 1000, "linear", function() {
+  		$(".block1").hide();
+  });
+  $( ".block2" ).animate({
+  	right: ($(window).width()/2 - 100)
+  	}, 1000, "linear", function() {
+  	$(".block2").hide();
+  });

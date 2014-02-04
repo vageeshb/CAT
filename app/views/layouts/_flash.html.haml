@@ -1,0 +1,5 @@
+#notice.row-fluid
+  - flash.each do |name, msg|
+    %div{:class => "alert alert-#{name}"}
+      %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+      = msg

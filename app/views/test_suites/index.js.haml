@@ -1,0 +1,4 @@
+$('#createTS_link').parent().removeClass("active");
+$('#viewTS_link').parent().addClass("active");
+$("#ts-list-options").hide();
+$('#tab-content').replaceWith("#{escape_javascript render(file: 'test_suites/view.html.haml')}")
