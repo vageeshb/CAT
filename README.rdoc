@@ -1,28 +1,30 @@
-== README
+== Selenium Framework on Rails (SeRa)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an implementation of creating a Selenium framework on top of Rails framework.
 
-Things you may want to cover:
+The application needs to be launched at a server to which the clients will be connecting. Users can then access and perform testing remotely.
 
-* Ruby version
+Functioning Components:
 
-* System dependencies
+1. Object Repositories:
+-- Create Repositiories as required
+-- Add Web Elements to your repositories
 
-* Configuration
+2. Test Suite Creation:
+-- Create Test Suites/Test Cases/Test Steps
+-- Link Object repository elements to your test steps
 
-* Database creation
+3. Execute a complete test case or individual test step.
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+4. View Execution summary reports.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+== To Do:
+1. Add Test Data Management Functionality
+2. Add Execution Completion Pop-up/Alert
+3. More selenium power
+
+== Requirements/Dependencies:
+1. Sidekiq for execution management
+
+
