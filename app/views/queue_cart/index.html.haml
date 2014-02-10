@@ -1,0 +1,11 @@
+.row-fluid
+  #menu-tab.span2
+    %ul.nav.nav-pills.nav-stacked.bs-docs-sidenav.affix
+      %li= link_to "Pending Jobs",queue_show_path, remote: true
+      %li= link_to "Processed Jobs", '#', remote: true
+      %li= link_to "All Reports", queue_view_report_path, remote:true
+      
+  .span10
+    #display-tab.well
+      #tab-content
+        You can manage the execution of queued jobs here!

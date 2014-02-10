@@ -1,0 +1,31 @@
+#tab-content
+	.row-fluid
+		%span.label.label-info Job List
+	%br
+	#menu-bar.row-fluid
+		.btn-group
+	%br
+	= render(:partial => "layouts/flash")
+	.row-fluid#test-contents
+		%table.table.table-bordered.table-hover
+			%tbody
+				%tr.info
+					%td Select
+					%td Test Suite Name
+					%td Test Name
+					%td Test Step Name
+					%td{colspan: 2, style: 'text-align: center;'} Options
+				- @queues.each do |q|
+					%tr
+						%td= check_box(q.id,q.id)
+						%td= TestSuite.find(q.test_suite_id).name
+						- if q.test_id
+							%td= Test.find(q.test_id).name
+						- else
+							%td
+						- if q.test_step_id
+							%td= TestStep.find(q.test_step_id).step_name
+						- else
+							%td
+						%td= link_to "", '#', class: 'btn btn-small icon-trash'
+						%td= link_to "", '#', class: 'btn btn-small icon-wrench'

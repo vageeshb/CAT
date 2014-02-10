@@ -1,0 +1,47 @@
+#tab-content
+	.row-fluid
+		%span.label.label-info Web Elements Used:
+	%br
+	%table.table.table-bordered.table-hover
+		%tr.info
+			%td Repository Name
+			%td Element Name
+			%td Element Type
+			%td Identifier Name
+			%td Identifier Value
+		- @steps.each do |st|
+			- if !st.element_id.nil?
+				%tr
+					%td= ObjectRepository.find(st.object_repository_id).name
+					%td= WebElement.find(st.element_id).element_name
+					%td= WebElement.find(st.element_id).element_type
+					%td= WebElement.find(st.element_id).identifier_name
+					%td= WebElement.find(st.element_id).identifier_value
+	.row-fluid
+		%span.label.label-info Test Steps:
+	%br
+	%table.table.table-bordered.table-hover
+		%tr.info
+			%td Step Name
+			%td Step Function
+			%td Step Value
+			%td Status
+			%td Last Run
+		- @steps.each do |st|
+			- if st.status=="Pass"
+				%tr.success
+					%td= st.step_name
+					- if st.function.nil?
+						%td Assert
+						%td= st.expected
+					- else
+						%td= st.function
+						%td= st.value
+					%td= st.status
+					%td= st.last_run.strftime('%d-%m-%Y at %H:%M:%S')
+	.row-fluid
+		Final Status:
+		- if @final_status=="Pass"
+			%span.label.label-success Pass
+		- else
+			%span.label.label-important Fail
