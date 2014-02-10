@@ -20,7 +20,7 @@
 					%td Value
 					%td Status
 					%td Last Run
-					%td{colspan: 3, style: 'text-align: center;'} Options
+					%td{colspan: 4, style: 'text-align: center;'} Options
 				- if @test.test_steps.count==0 then 
 					%tr
 						%td{colspan:'9'} There are no test steps!
@@ -42,4 +42,8 @@
 							%td No Run
 						%td= link_to "", edit_test_test_step_path(@test.id,t.id),remote: true, class: 'btn btn-small icon-pencil'
 						%td= link_to "", test_test_step_path(@test.id,t.id), method: :delete, data: {confirm: "Are you sure you want to delete test step \'#{t.step_name}\'?"}, remote: true,class: 'btn btn-small icon-trash'
-						%td= link_to "", exec_test_step_path(test_step_id: t.id), remote: true, class: 'btn btn-small icon-wrench'
+						- if !ExecProgress.where(user_id: current_user.id, test_step_id: t.id).first.nil?
+							%td= image_tag 'step.gif', id: "exec_st_#{t.id}", :'data-toggle' => 'tooltip', title: "Executing '#{t.step_name}'"
+						- else
+							%td= link_to "", exec_test_step_path(test_step_id: t.id), remote: true, class: 'btn btn-small icon-wrench', id: "exec_st_#{t.id}"
+						%td= link_to "", add_ts_to_queue_path(test_step_id: t.id), remote: true, class: 'btn btn-small icon-shopping-cart', id: "queue_st_#{t.id}"

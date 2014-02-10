@@ -25,7 +25,8 @@
     / For all other devices
     / Size should be 32 x 32 pixels
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
-    = javascript_include_tag "application"
+    / Including JS for push notification
+    = javascript_include_tag "application", "http://192.168.10.54:9292/faye.js"
   %body
     = render 'layouts/navigation.html.haml'
     .container-fluid

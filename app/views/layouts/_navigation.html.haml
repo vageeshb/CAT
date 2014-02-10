@@ -6,18 +6,31 @@
         %span.icon-bar
         %span.icon-bar
       - if signed_in?
-        = link_to "SeRa", home_path, class:'brand'
+        %ul.nav.pull-left
+          %li= link_to "SeRa", home_path, class: 'brand'
+          %li= link_to "Configuration", configuration_path
+          %li= link_to "Object Repositories", obj_repo_path
+          %li= link_to "Test Suites", test_suites_path
+          %li= link_to "Jobs", queue_path
+          %li= link_to "Test Data Management", '#'
       - else
-        = link_to "SeRa", root_path, class:'brand'
+        %ul.nav.pull-left
+          = link_to "SeRa", root_path, class:'brand'
       .container-fluid.nav-collapse
         %ul.nav.pull-right
           - if signed_in?
-            %li= link_to "Configuration", configuration_path
-            %li= link_to "Test Suites", test_suites_path
-            %li= link_to "Test Data Management", '#'
-            %li= link_to "Object Repositories", obj_repo_path
-            %li= link_to "Reports", report_path
-            %li= link_to "Sign Out", signout_path
+            %li= link_to raw("<i class='icon-bell'></i>"), '#', id: 'status'
+            %li= link_to raw("<i class='icon-globe'></i>"), '#', id:'notification', :'data-toggle' => 'tooltip', title: 'Notification'
+            %li= link_to raw("<i class='icon-off'></i>"), signout_path, :'data-toggle' => "tooltip", :title => "Sign Out"
+            %li= link_to raw("<i class='icon-user'></i> #{current_user.email}"), '#', :'data-toggle' => 'tooltip', :title => "Logged in as #{current_user.email}"
+            :javascript
+              $(function() {
+                var faye = new Faye.Client('http://192.168.10.54:9292/faye');
+                var public_subscription = faye.subscribe("/users/#{current_user.id}", function(data) {
+                  eval(data);
+                });
+              });
           - else
             %li#signup= link_to "Sign Up", signup_path
             %li#signin= link_to "Sign In", signin_path, remote: true
+          

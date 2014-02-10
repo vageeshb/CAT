@@ -27,6 +27,11 @@ gem 'jquery-rails'
 gem 'selenium-webdriver'
 gem "thin"
 
+# Push notifications
+gem 'faye'
+
+# For animations
+gem "animate-rails"
 
 gem 'sidekiq', '~> 2.17.0'
 #gem 'sidekiq_status', '1.0.7'

@@ -26,6 +26,26 @@ class TestWorker
     	logger.info("\nFinal Status: " + run_status.to_s)
     	test.update_attributes(status: run_status, last_run: DateTime.now)
 
+    	execution = ExecProgress.where(user_id: user.id, test_step_id: test_step.id).first
+    	
+    	ExecProgress.delete(execution.id)
+
+    	EM.run {
+		  	client = Faye::Client.new('http://192.168.10.54:9292/faye')
+		  	publication = client.publish("/users/#{user.id}", "
+		  		$('#notification').css(\"background-color\", \"#8A0707\");
+		  		$('#status').replaceWith('<a id=\"status\" href=\"#\"><i class=\"icon-bell\"></i></a>');
+		  		$(\'#exec_#{test_step.id}\').replaceWith(\'<a id=\"exec_#{test_step.id}\" href=\"/exec_test_step?test_step_id=#{test_step.id}\" data-remote=\"true\" class=\"btn btn-small icon-wrench\"></a>\');
+		  		")
+
+		  	publication.callback do
+			  logger.info("Message sent to channel '/users/#{user.id}'")
+			end
+
+			publication.errback do |error|
+			  logger.info('There was a problem: ' + error.message)
+			end
+		}
  	end
  	########################################
 

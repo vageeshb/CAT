@@ -8,13 +8,9 @@ class SessionsController < ApplicationController
 		if user && user.authenticate(params[:session][:password])
 		  	sign_in user
 		  	redirect_to home_path
-
 		else
-			respond_to do |wants|
-				wants.html {  }
-				wants.js { render 'sessions/fail.js.haml'}
-			end
-      		
+			flash[:error]="Invalid Username/Password Combination"
+			redirect_to root_path
 		end
 	end
 

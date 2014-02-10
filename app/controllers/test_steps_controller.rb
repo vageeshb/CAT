@@ -106,6 +106,7 @@ class TestStepsController < ApplicationController
 	      redirect_to root_url, notice:"Please Sign In" unless signed_in?
 	    end
 		def load_test
+			
 			@test = Test.find(params[:test_id])
 			@test_suite = @test.test_suite
 			@or_options={}

@@ -1,6 +1,7 @@
 class MenusController < ApplicationController
 	before_action :signed_in_user, except: :welcome
 	def home
+		@user_id = current_user.id
 		render 'home.html.haml'
 	end
 	private

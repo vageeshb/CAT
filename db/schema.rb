@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140128083653) do
+ActiveRecord::Schema.define(version: 20140210124854) do
+
+  create_table "exec_progresses", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "test_id"
+    t.integer  "test_step_id"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "executions", force: true do |t|
     t.integer  "user_id"
@@ -39,6 +48,14 @@ ActiveRecord::Schema.define(version: 20140128083653) do
     t.string  "url"
     t.text    "attachments"
     t.integer "user_id"
+  end
+
+  create_table "queue_carts", force: true do |t|
+    t.integer  "test_suite_id"
+    t.integer  "test_id"
+    t.integer  "test_step_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "selenium_configs", force: true do |t|

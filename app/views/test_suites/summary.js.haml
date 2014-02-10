@@ -1,2 +1,3 @@
-alert("Executing....Please wait!");
-$("#exec_#{@id}").attr('disabled','disabled');
+$('#status').replaceWith("<a id='status' data-toggle='tooltip' title='Executing Test Step'><img src='#{escape_javascript image_url('executing.gif')}' /></a>");
+$("#exec_#{@test_step_id}").replaceWith("<a id='exec_#{@test_step_id}' data-toggle='tooltip' title='Executing Test Step'><img src='#{escape_javascript image_url('step.gif')}' /></a>");
+$('#notification').css("background","#333333");

@@ -16,7 +16,7 @@
 					%td Test Priority
 					%td Test Status
 					%td Last Run
-					%td{colspan: 3, style: 'text-align: center;'} Options
+					%td{colspan: 4, style: 'text-align: center;'} Options
 				- if @test_suite.tests.count==0 then 
 					%tr
 						%td{colspan:'6'} There are no tests!
@@ -32,3 +32,4 @@
 						%td= link_to "", edit_test_suite_test_path(@test_suite.id, t.id),remote: true, class: 'btn btn-small icon-pencil'
 						%td= link_to "", test_suite_test_path(@test_suite.id, t.id), method: :delete, confirm: "Are you sure you want to delete test \'#{t.name}\'?", remote: true,class: 'btn btn-small icon-trash'
 						%td= link_to "", exec_test_path(test_id: t.id), remote: true, id: "exec_#{t.id}"  , class: 'btn btn-small icon-wrench'
+						%td= link_to "", add_tc_to_queue_path(test_id: t.id), remote: true, id: "queue_tc_#{t.id}", class: 'btn btn-small icon-shopping-cart'

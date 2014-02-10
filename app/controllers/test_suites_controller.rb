@@ -68,10 +68,26 @@ class TestSuitesController < ApplicationController
     end
   end
 
+  def add_tc
+    @test = Test.find(params[:test_id])
+    @test_suite_id = @test.test_suite_id
+    @queue_tc = QueueCart.new(test_suite_id: @test_suite_id, test_id: @test.id)
+    respond_to do |wants|
+      if @queue_tc.save
+        flash.now[:success]="Test Case \'#{@test.name}\' added to Job queue!"
+        wants.js {}
+      else
+        flash.now[:error]="There was some error. Test Case could not be added to the queue!"
+        wants.js {}
+      end
+    end
+  end
+
   def exec_test
     @test_id = params[:test_id]
     @user_id = current_user.id
-    TestWorker.perform_async(@test_id, @user_id)
+    @exec = ExecProgress.create(user_id: @user_id, test_id: @test_id, status: 'Start') 
+    #TestWorker.perform_async(@test_id, @user_id)
     respond_to do |wants|
        wants.html {  }
        wants.js { render 'summary.js.haml' }
@@ -82,6 +98,7 @@ class TestSuitesController < ApplicationController
       redirect_to root_url, notice:"Please Sign In" unless signed_in?
     end
     def load_test_suite
+      @user_id = current_user.id
       @test_suites=TestSuite.where(:user_id => current_user.id).to_a
     end
     def new_ts_params

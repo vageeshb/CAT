@@ -1,6 +1,8 @@
 class TestStepWorker
 	include Sidekiq::Worker
 	include Selenium
+	require 'eventmachine'
+	require 'faye'
 
 	# Importing all methods
 	require_relative 'methods'
@@ -19,11 +21,14 @@ class TestStepWorker
 
 	# This method performs the test step execution asynchronously
 	def perform(test_step_id, user_id)
+
 		method = Methods.new
 
     	test_step = TestStep.find(test_step_id)
     	user = User.find(user_id)
+
     	logger.info("\nStarting Test Step")
+ 	
     	param_url = SeleniumConfig.find_by_user_id(user.id).url.to_sym
 
     	method.initialize_driver(param_url)
@@ -40,6 +45,28 @@ class TestStepWorker
     	method.close
 
     	test_step.update_attributes(status: run_status, last_run: DateTime.now)
+
+    	execution = ExecProgress.where(user_id: user.id, test_step_id: test_step.id).first
+
+    	ExecProgress.delete(execution.id)
+
+    	EM.run {
+		  	client = Faye::Client.new('http://192.168.10.54:9292/faye')
+		  	publication = client.publish("/users/#{user.id}", "
+		  		$('#notification').css(\"background-color\", \"#8A0707\");
+		  		$('#status').replaceWith('<a id=\"status\" href=\"#\"><i class=\"icon-bell\"></i></a>');
+		  		$(\'#exec_st_#{test_step.id}\').replaceWith(\'<a id=\"exec_st_#{test_step.id}\" href=\"/exec_test_step?test_step_id=#{test_step.id}\" data-remote=\"true\" class=\"btn btn-small icon-wrench\"></a>\');
+		  		")
+
+		  	publication.callback do
+			  logger.info("Message sent to channel '/users/#{user.id}'")
+			end
+
+			publication.errback do |error|
+			  logger.info('There was a problem: ' + error.message)
+			end
+		}
+
  	end
 	########################################
 end
