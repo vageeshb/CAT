@@ -4,6 +4,10 @@ This is an implementation of creating a Selenium framework on top of Rails frame
 
 The application needs to be launched at a server to which the clients will be connecting. Users can then access and perform testing remotely.
 
+== New Updates
+1. Added execution notification
+2. Added Queueing of jobs
+
 Functioning Components:
 
 1. Object Repositories:
@@ -21,10 +25,11 @@ Functioning Components:
 
 == To Do:
 1. Add Test Data Management Functionality
-2. Add Execution Completion Pop-up/Alert
-3. More selenium power
+2. More selenium functionality:
+  a. Looping
+  b. Drag and drop
 
 == Requirements/Dependencies:
 1. Sidekiq for execution management
-
+2. Faye for server/client notifications about job completion
 
