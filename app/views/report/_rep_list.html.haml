@@ -1,5 +1,0 @@
-%ul.nav.nav-list.nav-stacked#rep-list-options
-	%li.divider
-	- Execution.where(user_id: current_user.id).group("name").to_a.each do |r|
-		%li.dropdown
-			= link_to raw("#{r.name}<i class='icon-chevron-right pull-right'></i>"), report_show_path(name: r.name), remote: true
