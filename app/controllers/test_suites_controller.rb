@@ -87,7 +87,7 @@ class TestSuitesController < ApplicationController
     @test_id = params[:test_id]
     @user_id = current_user.id
     @exec = ExecProgress.create(user_id: @user_id, test_id: @test_id, status: 'Start') 
-    #TestWorker.perform_async(@test_id, @user_id)
+    TestWorker.perform_async(@test_id, @user_id)
     respond_to do |wants|
        wants.html {  }
        wants.js { render 'summary.js.haml' }

@@ -1,3 +1,2 @@
-$('#status').replaceWith("<a id='status' data-toggle='tooltip' title='Executing Test Step'><img src='#{escape_javascript image_url('executing.gif')}' /></a>");
-$("#exec_st_#{@test_step_id}").replaceWith("<a id='exec_st_#{@test_step_id}' data-toggle='tooltip' title='Executing Test Step'><img src='#{escape_javascript image_url('step.gif')}' /></a>");
-$('#notification').css("background","#333333");
+$('#status').replaceWith("<a id='status' data-toggle='tooltip' title='Job Run in Progress'><img src='#{escape_javascript image_url('executing.gif')}' /></a>");
+$("#exec_st_#{@test_step_id}").replaceWith("<span id='exec_st_#{@test_step_id}'><a data-toggle='tooltip' title='Executing Job'><img src='#{escape_javascript image_url('step.gif')}' /></a></span>");

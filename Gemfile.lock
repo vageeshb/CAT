@@ -26,8 +26,6 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    animate-rails (1.0.4)
-      rails
     arel (4.0.1)
     atomic (1.1.14)
     bcrypt-ruby (3.1.2-x86-mingw32)
@@ -55,7 +53,6 @@ GEM
     em-socksify (0.3.0)
       eventmachine (>= 1.0.0.beta.4)
     erubis (2.7.0)
-    eventmachine (1.0.3)
     eventmachine (1.0.3-x86-mingw32)
     execjs (2.0.2)
     faye (1.0.1)
@@ -186,7 +183,6 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  animate-rails
   bcrypt-ruby (= 3.1.2)
   coffee-rails (~> 4.0.0)
   faye

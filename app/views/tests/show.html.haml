@@ -25,7 +25,7 @@
 					%tr
 						%td{colspan:'9'} There are no test steps!
 				- @test_steps.each do |t|
-					%tr{id: "tr_#{t.id}"}
+					%tr{id: "ts_row_#{t.id}"}
 						%td= "#{t.step_name}"
 						%td= "#{t.step_description}"
 						%td= "#{t.expected}"

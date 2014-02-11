@@ -2,30 +2,75 @@
 	.row-fluid
 		%span.label.label-info Job List
 	%br
-	#menu-bar.row-fluid
-		.btn-group
-	%br
-	= render(:partial => "layouts/flash")
-	.row-fluid#test-contents
-		%table.table.table-bordered.table-hover
-			%tbody
-				%tr.info
-					%td Select
-					%td Test Suite Name
-					%td Test Name
-					%td Test Step Name
-					%td{colspan: 2, style: 'text-align: center;'} Options
-				- @queues.each do |q|
-					%tr
-						%td= check_box(q.id,q.id)
-						%td= TestSuite.find(q.test_suite_id).name
-						- if q.test_id
-							%td= Test.find(q.test_id).name
+	= form_tag(queue_exec_sel_path, remote: true, id: 'job_queue') do
+		.row-fluid
+			#menu-bar
+				= submit_tag "Execute Selected", class: 'btn btn-primary', id: 'exec_sel'
+				= submit_tag "Execute All", class: 'btn btn-primary'
+				%span.pull-right
+					%label.checkbox.inline
+						#select_all Select All
+					%label.checkbox.inline
+						#select_none Select None
+			%br
+			= render(:partial => "layouts/flash")
+			#test-contents
+				%table.table.table-bordered.table-hover
+					%tbody
+						%tr.info
+							%td Select
+							%td Test Suite Name
+							%td Test Name
+							%td Test Step Name
+							%td Options
+						- if @queues.size == 0 
+							%tr
+								%td{colspan: 5} No Jobs in queue!
 						- else
-							%td
-						- if q.test_step_id
-							%td= TestStep.find(q.test_step_id).step_name
-						- else
-							%td
-						%td= link_to "", '#', class: 'btn btn-small icon-trash'
-						%td= link_to "", '#', class: 'btn btn-small icon-wrench'
+							- @queues.each do |q|
+								%tr{id:"q_row_#{q.id}"}
+									- if ExecProgress.where(queue_id: q.id).first
+										%td
+											%span{id: "exec_#{q.id}"}= image_tag 'step.gif', :'data-toggle' => 'tooltip', title: "Job Run in Progress"
+										%td= TestSuite.find(q.test_suite_id).name
+										- if q.test_id
+											%td= Test.find(q.test_id).name
+										- else
+											%td
+										- if q.test_step_id
+											%td= TestStep.find(q.test_step_id).step_name
+										- else
+											%td
+										%td= link_to "", '#', confirm: "Sorry, the Job is in progress!", class: 'btn btn-small icon-trash'
+										
+									- else
+										%td
+											%span{id: "exec_#{q.id}"}= check_box_tag('exec_id[]', q.id)
+										%td= TestSuite.find(q.test_suite_id).name
+										- if q.test_id
+											%td= Test.find(q.test_id).name
+										- else
+											%td
+										- if q.test_step_id
+											%td= TestStep.find(q.test_step_id).step_name
+										- else
+											%td
+										%td= link_to "", queue_path(id: q.id), method: :delete, confirm: "Are you sure you want to delete the pending job?", remote: true, class: 'btn btn-small icon-trash'
+	:coffee
+
+		$("#select_all").click ->
+			$(@).css('color','#5C0000')
+			$(@).css('text-decoration','underline')
+			$('#select_none').css('color','#0088CC')
+			$('#select_none').css('text-decoration','none')
+			$('input[type="checkbox"]').each ->
+				if($(@).is(':disabled') == false)
+					$(@).prop('checked', true)
+			false
+		$("#select_none").click ->
+			$(@).css('color','#5C0000')
+			$(@).css('text-decoration','underline')
+			$('#select_all').css('color','#0088CC')
+			$('#select_all').css('text-decoration','none')
+			$('input[type="checkbox"]').prop('checked', false)
+			false

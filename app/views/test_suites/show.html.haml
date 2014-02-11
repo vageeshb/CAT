@@ -21,7 +21,7 @@
 					%tr
 						%td{colspan:'6'} There are no tests!
 				- @tests.each do |t|
-					%tr{id: "tr_#{t.id}"}
+					%tr{id: "tc_row_#{t.id}"}
 						%td= link_to "#{t.name}", test_suite_test_path(@test_suite.id, t.id), remote: true, :'data-toggle' => 'tooltip', title: "#{t.description}"
 						%td 
 						%td= "#{t.status}"

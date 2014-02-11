@@ -70,20 +70,20 @@ class TestsController < ApplicationController
 
 	def destroy
 		@test = @test_suite.tests.find(params[:id]).delete
-			@tests=@test_suite.tests.all.to_a
-			flash.now[:success] = "Test \'#{@test.name}\' was successfully deleted."
-			if @test_suite.tests.size>0 then
-				respond_to do |wants|
-					wants.html {  }
-					wants.js {  }
-				end
-			else
-				flash.now[:notice]="No Tests Found for #{@test_suite.name}"
-				respond_to do |wants|
-					wants.html {  }
-					wants.js { render 'index.js.haml' }
-				end
+		@tests = @test_suite.tests.all.to_a
+		flash.now[:success] = "Test \'#{@test.name}\' was successfully deleted."
+		if @test_suite.tests.size>0 then
+			respond_to do |wants|
+				wants.html {  }
+				wants.js {  }
 			end
+		else
+			flash.now[:notice]="No Tests Found for #{@test_suite.name}"
+			respond_to do |wants|
+				wants.html {  }
+				wants.js { render 'index.js.haml' }
+			end
+		end
 	end
 
 	def add_ts
@@ -106,7 +106,7 @@ class TestsController < ApplicationController
 		@test_step_id = params[:test_step_id]
 		@user_id = current_user.id
 		@exec = ExecProgress.create(user_id: @user_id, test_step_id: @test_step_id, status: 'Start') 
-		#TestStepWorker.perform_async(@test_step_id,@user_id)
+		TestStepWorker.perform_async(@test_step_id,@user_id)
 	    respond_to do |wants|
 	       wants.html {  }
 	       wants.js { render 'summary.js.haml' }
