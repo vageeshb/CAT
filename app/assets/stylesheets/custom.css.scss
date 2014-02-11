@@ -1,0 +1,142 @@
+// Place all the styles related to the Menus controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+/* Menu List */
+.bs-docs-sidenav.affix {
+    top: 40px;
+}
+.bs-docs-sidenav {
+    width: 225px;
+}
+.bs-docs-sidenav {
+    background-color: #FFFFFF;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px #111;
+    margin: 22px 0 0;
+    width: 220px;
+}
+.dropdown {
+    margin-bottom: 7px;
+}
+.nav-pills > li > a {
+	margin: 5px 5px 5px 5px;
+}
+.well{
+	padding: 10px 15px  15px;
+    margin-left: 10px;
+}
+.table{
+	background: #fff;
+}
+.nav-list {
+    margin-left:5px;
+}
+.block1{
+    position: absolute;
+    left: 50px;
+}
+.block2{
+    position: absolute;
+    padding-top:10px;
+    right: 0px;
+}
+.navbar-inverse .nav > li > a:hover,
+.navbar-inverse .nav > li > a:focus {
+    background-color: #8a0707;
+}
+.nav-pills > .active > a, .nav-pills > .active > a:hover, .nav-pills > .active > a:focus {
+    background-color: #0088CC;
+    color: #FFFFFF;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    color:#111;
+}
+
+.bg-custom {
+    padding: 5px 0px 0px 10px;
+    background-color: #F5F5F5;
+    border: 1px solid #E3E3E3;
+    border-radius: 5px;
+}
+.active-cust {
+    margin-bottom: 7px;
+}
+
+/* Menu bar */
+#menu-bar {
+    border-radius: 3px;
+    background: #D9EDF7;
+    line-height: 20px;
+    padding: 8px 0px 8px 8px;
+    color: #0088CC;
+}
+
+#menu-bar .pull-right {
+    margin-right: 10px;
+}
+
+
+/* Tab Content Header - Labels */
+#tab-content .label, .badge {
+    background-color: #999999;
+    color: #FFFFFF;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 14px;
+    padding: 2px 4px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+#tab-content .label-info {
+    background-color: #3A87AD;
+}
+#tab-content .label-success, .badge-success {
+    background-color: #468847;
+}
+#tab-content .label {
+    border-radius: 3px;
+}
+
+/* Login Sessions */
+#form_signin {
+    padding: 6px;
+    margin: 0px;
+    line-height: 22px;
+}
+#email, #password
+{
+    padding: 3px;
+    margin: 0px;
+    line-height: 22px;
+    width: 150px;
+}
+#btnSignin
+{
+    background: none repeat scroll 0 0 #333333;
+    border-radius: 4px;
+    border-color: #333333;
+    border-style: solid;
+    border-width: 1px;
+    color: #eee;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 10px;
+    height: 20px;
+    margin-bottom: 0;
+    padding: 3px 7px;
+}
+#btnSignin:hover {
+    background: #8A0707;
+}
+
+/* Table data */
+.desc
+{
+    width: 150px;
+    word-wrap: break-word;
+}
+
