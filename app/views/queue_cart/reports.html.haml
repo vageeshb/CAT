@@ -1,0 +1,19 @@
+#tab-content
+	= render 'layouts/flash'
+	.row-fluid
+		%span.label.label-info Available Reports:
+	%br
+	%table.table.table-bordered.table-hover
+		%tr.info
+			%td Report Name
+			%td Test Suite Name
+			%td Test Name
+			%td Last Run
+			%td Options
+		- @reports.each do |r|
+			%tr{id: "report_#{r.name}"}
+				%td= link_to r.name, queue_show_report_path(name: r.name), remote: true
+				%td= TestSuite.find(r.test_suite_id).name
+				%td= Test.find(r.test_id).name
+				%td= r.last_run.strftime('%d-%m-%Y at %H:%M:%S') unless r.last_run.nil?
+				%td= link_to "",queue_delete_report_path(name: r.name), method: :delete, remote:true, data: {confirm: "Are you sure you want to delete #{r.name}?"},class:'btn btn-small icon-trash'

@@ -1,4 +1,9 @@
 #tab-content
+	#imageFrame
+	.row-fluid
+		%span.label.label-info Report Name:
+		%span= @executions.first.name
+	%br
 	.row-fluid
 		%span.label.label-info Web Elements Used:
 	%br
@@ -39,9 +44,20 @@
 						%td= st.value
 					%td= st.status
 					%td= st.last_run.strftime('%d-%m-%Y at %H:%M:%S')
+			- else
+				%tr.warning
+					%td= link_to raw("<i class='icon-tag'></i> #{st.step_name}"), queue_view_error_path(error_name: @executions.first.name), remote: true, data: {toggle: 'tooltip'} , title: 'Click to view error screenshot!'
+					- if st.function.nil?
+						%td Assert
+						%td= st.expected
+					- else
+						%td= st.function
+						%td= st.value
+					%td= st.status
+					%td= st.last_run.strftime('%d-%m-%Y at %H:%M:%S')
 	.row-fluid
 		Final Status:
 		- if @final_status=="Pass"
 			%span.label.label-success Pass
 		- else
-			%span.label.label-important Fail
+			%span.label.label-fail Fail

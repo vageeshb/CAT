@@ -1,5 +1,5 @@
 %ul.nav.nav-list.nav-stacked#rep-list-options
 	%li.divider
-	- Execution.where(user_id: current_user.id).group("name").order(created_at: :desc).to_a.each do |r|
+	- Execution.select("DISTINCT ON (name) *").where(user_id: current_user.id).order(name: :desc).to_a.each do |r|
 		%li.dropdown
 			= link_to raw("#{r.name}<i class='icon-chevron-right pull-right'></i>"), queue_show_report_path(name: r.name), remote: true

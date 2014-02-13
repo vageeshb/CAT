@@ -89,6 +89,8 @@ class TestStepsController < ApplicationController
 		@functions["Select a Function"]=""
 		@web_element=WebElement.where(object_repository_id: @or,element_name:@el, page_name:@pg).first
 		case @web_element.element_type
+			when 'Text'
+				@functions["Assert"]="Assert"
 			when 'Text Box'
 				@functions["Enter Value"]="Enter Value"
 			when 'Select Box'
@@ -110,7 +112,7 @@ class TestStepsController < ApplicationController
 			@test = Test.find(params[:test_id])
 			@test_suite = @test.test_suite
 			@or_options={}
-			ObjectRepository.all.each {|o| @or_options[o.name] = o.id}
+			ObjectRepository.where(user_id: current_user.id).to_a.each {|o| @or_options[o.name] = o.id}
 		end
 		def test_step_params
 			params.require(:test_step).permit(:step_name, :step_description, :expected, :object_repository_id, :page_name, :element_id, :value, :function)

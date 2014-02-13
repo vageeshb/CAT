@@ -97,6 +97,9 @@
 #tab-content .label-success, .badge-success {
     background-color: #468847;
 }
+#tab-content .label-fail {
+    background-color: #B94A48;
+}
 #tab-content .label {
     border-radius: 3px;
 }
@@ -140,3 +143,15 @@
     word-wrap: break-word;
 }
 
+/* Error Modal */
+#imageModal {
+    width: 80%;
+    height: 80%;
+    margin-left: 10%;
+    left: 0;
+    text-align: center;
+}
+#imageModal img {
+    width: 90%;
+    height: 90%;
+}

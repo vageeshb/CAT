@@ -1,4 +1,5 @@
-.well.well-large
-	%h4.offset6 Sign Up
-	%br
-	= render 'form'
+#signUp
+	#signUpModal.modal.hide.fade
+		= render 'form'
+	:javascript
+		$('#signUpModal').modal('toggle')

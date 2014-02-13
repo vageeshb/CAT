@@ -1,6 +1,7 @@
 class TestsController < ApplicationController
 	before_action :load_test_suite, except: [:exec_test_step, :add_ts]
 	before_action :signed_in_user
+
 	def new
 		@test = @test_suite.tests.new
 		respond_to do |wants|
@@ -8,6 +9,7 @@ class TestsController < ApplicationController
 			wants.js {}
 		end
 	end
+
 	def show
 		@test=@test_suite.tests.find(params[:id])
 		@test_steps=@test.test_steps
@@ -16,6 +18,7 @@ class TestsController < ApplicationController
 			wants.js { render 'show.js.haml'  }
 		end
 	end
+
 	def index
 		if @test_suite.tests.size>0 then
 			respond_to do |wants|
@@ -30,6 +33,7 @@ class TestsController < ApplicationController
 			end
 		end
 	end
+
 	def create
 		@test = @test_suite.tests.new(test_params)
 		if @test.save
@@ -47,12 +51,14 @@ class TestsController < ApplicationController
 			
 		end
 	end
+
 	def edit
 		@test = @test_suite.tests.find(params[:id])
 	    respond_to do |format|
 	      format.js { }
 	    end
   	end
+
 	def update
 		@test = @test_suite.tests.find(params[:id])
 	    respond_to do |format|
@@ -90,7 +96,7 @@ class TestsController < ApplicationController
 		@test_step = TestStep.find(params[:test_step_id])
 		@test_id = @test_step.test_id
 		@test_suite_id = Test.find(@test_id).test_suite_id
-		@queue_ts = QueueCart.new(test_suite_id: @test_suite_id, test_id: @test_id, test_step_id: @test_step.id)
+		@queue_ts = Job.new(user_id: current_user.id,test_suite_id: @test_suite_id, test_id: @test_id, test_step_id: @test_step.id, status: "Pending")
 		respond_to do |wants|
 			if @queue_ts.save
 				flash.now[:success]="Test Step \'#{@test_step.step_name}\' added to Job queue!"
@@ -105,8 +111,8 @@ class TestsController < ApplicationController
 	def exec_test_step
 		@test_step_id = params[:test_step_id]
 		@user_id = current_user.id
-		@exec = ExecProgress.create(user_id: @user_id, test_step_id: @test_step_id, status: 'Start') 
-		TestStepWorker.perform_async(@test_step_id,@user_id)
+		#@exec = ExecProgress.create(user_id: @user_id, test_step_id: @test_step_id, status: 'Start') 
+		#TestStepWorker.perform_async(@test_step_id,@user_id)
 	    respond_to do |wants|
 	       wants.html {  }
 	       wants.js { render 'summary.js.haml' }
@@ -118,8 +124,8 @@ class TestsController < ApplicationController
 	    end
 		def load_test_suite
 			@test_suite = TestSuite.find(params[:test_suite_id])
-			@tests=@test_suite.tests.all.to_a
-			@test_suites=TestSuite.all
+			@tests = @test_suite.tests.all.to_a
+			@test_suites = TestSuite.all
 		end
 		def test_params
 			params.require(:test).permit(:name, :description)

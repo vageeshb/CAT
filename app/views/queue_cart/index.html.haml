@@ -1,9 +1,9 @@
 .row-fluid
   #menu-tab.span2
     %ul.nav.nav-pills.nav-stacked.bs-docs-sidenav.affix
-      %li= link_to "Pending Jobs",queue_show_path, remote: true, id: 'i1'
-      %li= link_to "Processed Jobs", '#', remote: true
-      %li= link_to "All Reports", queue_view_report_path, remote:true
+      %li= link_to "Pending Jobs",queue_show_pending_path, remote: true, id: 'i1'
+      %li= link_to "Processed Jobs", queue_show_processed_path, remote: true
+      %li= link_to "All Reports", queue_reports_path, remote:true
       %li
         #rep-list-options
   .span10

@@ -1,0 +1,66 @@
+#tab-content
+	.row-fluid
+		%span.label.label-info Job List
+	%br
+	= form_tag(queue_execute_path, remote: true, id: 'job_queue') do
+		.row-fluid
+			#menu-bar
+				= submit_tag "Execute Selected", class: 'btn btn-primary'
+				= submit_tag "Execute All", class: 'btn btn-primary'
+				%span.pull-right
+					%label.checkbox.inline
+						= link_to "Delete All", queue_delete_all_path, method: :delete, data: {confirm: "Are you sure you want to delete the pending job?"}, remote: true
+					%label.checkbox.inline
+						%a#select_all{href: '#'} Select All
+					%label.checkbox.inline
+						%a#select_none{href: '#'} Select None
+			%br
+			= render(:partial => "layouts/flash")
+			#test-contents
+				%table.table.table-bordered.table-hover
+					%tbody
+						%tr.info
+							%td Select
+							%td Test Suite Name
+							%td Test Name
+							%td Test Step Name
+							%td Options
+						- if @jobs.nil? or @jobs.size==0
+							%tr
+								%td{colspan: 5} No Jobs in queue!
+						- else
+							- @jobs.each do |job|
+								%tr{id:"job_#{job.id}"}
+									- if job.status!="Pending"
+										%td= image_tag("step.gif")
+									- else
+										%td
+											%span{id: "exec_#{job.id}"}= check_box_tag('job_id[]', job.id)
+									%td= TestSuite.find(job.test_suite_id).name
+									%td= Test.find(job.test_id).name unless job.test_id.nil?
+									%td= TestStep.find(job.test_step_id).step_name unless job.test_step_id.nil?
+									- if job.status=="Pending"
+										%td= link_to "", queue_path(id: job.id), method: :delete, data: {confirm: "Are you sure you want to delete the pending job?"}, remote: true, class: 'btn btn-small icon-trash'
+									- else
+										%td= link_to "",'#', data: {toggle: 'tooltip', confirm: 'You cannot delete a job in progress!'}, title: 'Job run in progress!', class: 'btn btn-small icon-trash'
+	:coffee
+		$("#delete_all").click ->
+			if(confirm("Are you sure you want to delete all the pending jobs?"))
+				alert($("table tr").length)
+			false
+		$("#select_all").click ->
+			$(@).css('color','#5C0000')
+			$(@).css('text-decoration','underline')
+			$('#select_none').css('color','#0088CC')
+			$('#select_none').css('text-decoration','none')
+			$('input[type="checkbox"]').each ->
+				if($(@).is(':disabled') == false)
+					$(@).prop('checked', true)
+			false
+		$("#select_none").click ->
+			$(@).css('color','#5C0000')
+			$(@).css('text-decoration','underline')
+			$('#select_all').css('color','#0088CC')
+			$('#select_all').css('text-decoration','none')
+			$('input[type="checkbox"]').prop('checked', false)
+			false

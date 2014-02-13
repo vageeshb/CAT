@@ -19,11 +19,7 @@
       .container-fluid.nav-collapse
         %ul.nav.pull-right
           - if signed_in?
-            - if ExecProgress.all.size==0
-              %li= link_to raw("<i class='icon-bell'></i>"), '#', :'data-toggle' => 'tooltip', title: "No Jobs in Progress", id: 'status'
-            - else
-              %li
-                %a= image_tag 'executing.gif', :'data-toggle' => 'tooltip', title: "Job Run in Progress", id: 'status'
+            %li= link_to raw("<i class='icon-bell'></i>"), '#', :'data-toggle' => 'tooltip', title: "No Jobs in Progress", id: 'status'
             %li= link_to raw("<i class='icon-globe'></i>"), '#', id:'notification', :'data-toggle' => 'tooltip', title: 'Notification'
             %li= link_to raw("<i class='icon-off'></i>"), signout_path, :'data-toggle' => "tooltip", :title => "Sign Out"
             %li= link_to raw("<i class='icon-user'></i> #{current_user.email}"), '#', :'data-toggle' => 'tooltip', :title => "Logged in as #{current_user.email}"
@@ -35,6 +31,6 @@
                 });
               });
           - else
-            %li#signup= link_to "Sign Up", signup_path
+            %li#signup= link_to "Sign Up", signup_path, remote: true
             %li#signin= link_to "Sign In", signin_path, remote: true
           

@@ -1,83 +1,96 @@
 class QueueCartController < ApplicationController
-	before_action :signed_in_user
-	
-	def add_ts
-		@queue = QueueCart.new(post_params)
-		
-		respond_to do |wants|
-			if @queue.save
-				flash[:notice] = 'Queue was successfully created.'
-				wants.html { redirect_to(@queue) }
-				wants.js { render '' }
-			else
-				wants.js { render '' }
-			end
-		end
-	end
+    before_action :signed_in_user
+    
+    def show_pending
+        @user_id = current_user.id
+        @jobs = Job.where(user_id: @user_id, status: "Pending").to_a
+        respond_to do |wants|
+            wants.html {  }
+            wants.js { render 'queue_cart/show_pending.js.haml' }
+        end
+    end
 
-	def show
-		@queues = QueueCart.all
-		@user_id = current_user.id
-		respond_to do |wants|
-			wants.html {  }
-			wants.js { render 'queue_cart/show.js.haml' }
-		end
-	end
+    def show_processed
+        respond_to do |wants|
+            wants.html {  }
+            wants.js { }
+        end
+    end
 
-	def view_report
-		@reports = Execution.where(user_id: current_user.id).group("name").order(created_at: :desc)
-		respond_to do |wants|
-			wants.html { }
-			wants.js { }
-		end
-	end
+    def reports
+       # To do
+    end
 
-	def show_report
-		@executions = Execution.where(user_id: current_user.id, name: params[:name])
-		@steps = Array.new
-		@final_status = "Pass"
-		@executions.each do |e|
-			@steps.push TestStep.find(e.test_step_id)
-			if e.status == "Fail" then @final_status="Fail" end
-		end
-	end
+    def show_report
+        # To do
+    end
 
-	def exec_sel
-		@user_id = current_user.id
-		@exec_id = params[:exec_id]
-		@exec_id.each do |ex|
-			@execution = QueueCart.find(ex)
-			if @execution.test_step_id
-				ExecProgress.create(queue_id: @execution.id,user_id: @user_id, test_step_id: @execution.test_step_id, status: 'Start') 
-				TestStepWorker.perform_async(@execution.test_step_id,@user_id)
-			else
-				ExecProgress.create(queue_id: @execution.id,user_id: @user_id, test_id: @execution.test_id, status: 'Start') 
-				TestWorker.perform_async(@execution.test_id, @user_id)
-			end
-		end
-		respond_to do |wants|
-				wants.html {  }
-				wants.js { }
-			end	
-	end
+    def delete_report
+       # To do
+    end
 
-	def exec_all
-		# To do
-	end
+    def view_error
+        # To Do
+    end
 
-	def destroy
-		@queue = QueueCart.find(params[:id]).delete
-		flash.now[:success] = "Job removed from queue!"
-		respond_to do |wants|
-			wants.js { }
-		end
-	end
+    def execute
+        @user_id = current_user.id
+        if params[:commit]=="Execute Selected" then
+            @job_ids = params[:job_id]
+            @job_ids.each do |id|
+                @job = Job.find(id)
+                @job.update_attributes(status: 'Started')
+                if @job.test_step_id
+                    #TestStepWorker.perform_async(@job.test_step_id,@user_id)
+                else
+                    TestWorker.perform_async(@job.id)
+                end
+            end
+        else
+            @job_ids = Array.new
+            @jobs = Job.where(user_id: @user_id, status: 'Pending').to_a
+            @jobs.each do |job|
+                @job_ids.push job.id
+                job.update_attributes(status: 'Started')
+                if job.test_step_id
+                    #TestStepWorker.perform_async(job.test_step_id,@user_id)
+                else
+                    TestWorker.perform_async(job.id)
+                end
+            end
+        end
+        respond_to do |wants|
+            wants.js { }
+        end
+    end
 
-	private
-		def signed_in_user
-			redirect_to root_url, notice:"Please Sign In" unless signed_in?
-		end
-		def post_params
-			params.require(:queue_cart).permit(:test_suite_id,:test_step_id,:test_id)
-		end
+    def destroy
+        @job_id = params[:id]
+        if Job.find(params[:id]).delete
+            flash.now[:success] = "Job removed from queue!"
+        else
+            flash.now[:error] = "Unexpected error occurred!"
+        end
+        respond_to do |wants|
+            wants.js { }
+        end
+    end
+
+    def destroy_all
+        @user_id = current_user.id
+        @jobs = Job.where(user_id: @user_id).to_a
+        Job.delete_all(user_id: @user_id)
+        flash.now[:success] = "All Jobs removed from queue!"
+        respond_to do |wants|
+            wants.js { }
+        end
+    end
+
+    private
+        def signed_in_user
+            redirect_to root_url, notice:"Please Sign In" unless signed_in?
+        end
+        def post_params
+            params.require(:queue_cart).permit(:test_suite_id,:test_step_id,:test_id)
+        end
 end

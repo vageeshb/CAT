@@ -1,5 +1,5 @@
 %ul.nav.pull-right
-  %li#signup= link_to "Sign Up", signup_path
+  %li#signup= link_to "Sign Up", signup_path, remote: true
   %li
     = form_for(:session, url: sessions_path, html: {id: 'form_signin'}) do |f|
       = f.text_field :email, id:'email', placeholder: "Email"

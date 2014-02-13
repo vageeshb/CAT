@@ -53,6 +53,9 @@
         = f.label :value
       .span3
         = f.text_field :value
+        %span.help-inline
+          %a{"data-toggle" => "tooltip", :href => "#", :title => "This is required for Input boxes or Asserts!"}
+            %i.icon-question-sign
   = f.submit  class:'btn btn-primary'
 :javascript
   $(document).ready(function() {
@@ -96,6 +99,15 @@
       }
       else {
        $('#test_step_value').prop('disabled',false); 
+      }
+    });
+    $('#function_select').change(function() {
+      if ($('#function_select').val() == 'Assert') {
+        $('#test_step_expected').attr('value','');
+        $('#test_step_expected').prop('disabled',true);
+      }
+      else {
+       $('#test_step_expected').prop('disabled',false); 
       }
     });
   });

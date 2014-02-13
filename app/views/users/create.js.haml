@@ -1,0 +1,9 @@
+- if @user.errors.any?
+	$('#signUpModal').modal('toggle');
+	$("#signUp").replaceWith("#{escape_javascript render file: 'users/new.html.haml'}");
+- else 
+	$('#signUpModal').modal('toggle');
+	$('#signUp').remove();
+	$('.navbar').replaceWith("#{escape_javascript render 'layouts/navigation.html.haml'}");
+	$("#main-area").replaceWith("#{escape_javascript render file: 'menus/home.html.haml'}");
+	document.location.hash = "#home"

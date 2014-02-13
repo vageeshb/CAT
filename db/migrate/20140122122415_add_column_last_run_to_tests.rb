@@ -1,5 +1,5 @@
 class AddColumnLastRunToTests < ActiveRecord::Migration
   def change
-    add_column :tests, :last_run, :DateTime
+    add_column :tests, :last_run, :timestamp
   end
 end

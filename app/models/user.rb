@@ -11,7 +11,8 @@ class User < ActiveRecord::Base
   	validates :password, length: { minimum: 6 }
 	
   	has_one :selenium_config
-  	after_create :create_report_dir
+  	has_many :queue_carts
+  	after_create :create_error_dir
 
 	def User.new_remember_token
 		SecureRandom.urlsafe_base64
@@ -21,9 +22,9 @@ class User < ActiveRecord::Base
 		Digest::SHA1.hexdigest(token.to_s)
 	end
 
-	def create_report_dir
+	def create_error_dir
 		dir = self.email.to_s
-		Dir.mkdir("./public/reports/"+dir) unless File.exists?(dir)
+		Dir.mkdir("./public/errors/"+dir) unless File.exists?("./public/errors/"+dir)
 	end
 
 	private

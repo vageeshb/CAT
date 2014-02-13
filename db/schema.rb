@@ -11,34 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140211111232) do
+ActiveRecord::Schema.define(version: 20140213104554) do
 
-  create_table "exec_progresses", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "test_id"
-    t.integer  "test_step_id"
-    t.string   "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "queue_id"
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
-  create_table "executions", force: true do |t|
+  create_table "jobs", force: true do |t|
     t.integer  "user_id"
     t.integer  "test_suite_id"
     t.integer  "test_id"
     t.integer  "test_step_id"
     t.string   "status"
-    t.datetime "last_run"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "name"
-  end
-
-  create_table "login_test_data", force: true do |t|
-    t.string   "email"
-    t.string   "password"
-    t.boolean  "check"
+    t.datetime "start_time"
+    t.string   "finish_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -55,6 +40,18 @@ ActiveRecord::Schema.define(version: 20140211111232) do
     t.integer  "test_suite_id"
     t.integer  "test_id"
     t.integer  "test_step_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reports", force: true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "test_suite_id"
+    t.integer  "test_id"
+    t.integer  "test_step_id"
+    t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -110,7 +107,7 @@ ActiveRecord::Schema.define(version: 20140211111232) do
     t.string   "password_digest"
   end
 
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
   create_table "web_elements", force: true do |t|
     t.string   "page_name"

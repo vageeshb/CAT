@@ -1,6 +1,7 @@
 class TestSuitesController < ApplicationController
   before_action :load_test_suite, except: :exec_test
   before_action :signed_in_user
+
   def new
     @test_suite = TestSuite.new
     respond_to do |wants|
@@ -8,6 +9,7 @@ class TestSuitesController < ApplicationController
       wants.js { }
     end
   end
+
   def show
     @test_suite=TestSuite.find(params[:id])
     @tests=@test_suite.tests
@@ -16,10 +18,12 @@ class TestSuitesController < ApplicationController
       wants.js {}
     end
   end
+
   def index
     @test_suite=TestSuite.new
     @test_suites=TestSuite.where(:user_id => current_user.id).to_a
   end
+
   def create
     @test_suite=TestSuite.new(new_ts_params)
     if @test_suite.save then
@@ -36,6 +40,7 @@ class TestSuitesController < ApplicationController
       end
     end
   end
+
   def edit
     @test_suite = TestSuite.find(params[:id])
     respond_to do |wants|
@@ -43,6 +48,7 @@ class TestSuitesController < ApplicationController
       wants.js {}
     end
   end
+
   def update
     @test_suite=TestSuite.find(params[:id])
     if @test_suite.update(new_ts_params)
@@ -71,9 +77,9 @@ class TestSuitesController < ApplicationController
   def add_tc
     @test = Test.find(params[:test_id])
     @test_suite_id = @test.test_suite_id
-    @queue_tc = QueueCart.new(test_suite_id: @test_suite_id, test_id: @test.id)
+    @job = Job.new(user_id: current_user.id,test_suite_id: @test_suite_id, test_id: @test.id, status: "Pending")
     respond_to do |wants|
-      if @queue_tc.save
+      if @job.save
         flash.now[:success]="Test Case \'#{@test.name}\' added to Job queue!"
         wants.js {}
       else

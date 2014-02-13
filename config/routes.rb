@@ -47,12 +47,15 @@ APA::Application.routes.draw do
 
   # Queue Paths
   match '/queue', to: 'queue_cart#index', via: 'get'
-  match '/queue/show', to: 'queue_cart#show', via: 'get'
-  match '/queue/view_report', to: 'queue_cart#view_report', via: 'get'
+  match '/queue/show_pending', to: 'queue_cart#show_pending', via: 'get'
+  match '/queue/show_processed', to: 'queue_cart#show_processed', via: 'get'
+  match '/queue/reports', to: 'queue_cart#reports', via: 'get'
   match '/queue/show_report', to: 'queue_cart#show_report', via: 'get'
-  #match '/queue/exec_all', to: 'queue_cart#exec_all', via: 'get'
-  match '/queue/exec_sel', to: 'queue_cart#exec_sel', via: 'post'
+  match '/queue/view_error', to: 'queue_cart#view_error', via: 'get'
+  match '/queue/delete_report', to: 'queue_cart#delete_report', via: 'delete'
+  match '/queue/execute', to: 'queue_cart#execute', via: 'post'
   match '/queue', to: 'queue_cart#destroy', via: 'delete'
+  match '/queue/delete_all', to: 'queue_cart#destroy_all', via: 'delete'
 
   # Sidekiq Dashboard Path
   mount Sidekiq::Web, at: '/sidekiq'

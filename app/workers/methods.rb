@@ -2,11 +2,11 @@ class Methods
 	include Selenium
 
 	# Initialising driver
-	def initialize_driver(web_url)
-		@driver = Selenium::WebDriver.for :firefox #:remote, url: "http://localhost:9134"
+	def initialize_driver(web_url, port)
+		@driver = Selenium::WebDriver.for :remote, :url => "http://localhost:4444/wd/hub/" #:remote, url: "http://localhost:#{port}"
 		@wait = Selenium::WebDriver::Wait.new(timeout:10)
 		@driver.manage.window.maximize
-		@driver.get "#{web_url}"
+		@driver.get web_url
 		
 	end
 	########################################
@@ -38,20 +38,26 @@ class Methods
 				log << ("\n'" + web_element.element_name.to_s + "' Presence: True")
 				case function
 					when 'Click'
-						e.send_keys :return
+						e.click
 						log << ("\nAction: Click")
 					when 'Select Option'
-						e.send_keys :return
+						e.click
 						log << ("\nAction: Selected option")
 					when 'Enter Value'
 						e.send_keys(value)
 						log << ("\nAction: Enter Value - #{value}")
+					when 'Assert'
+						log << ("\nAction: Asserting - #{value}")
+						if  !(e.text.eql? value) then
+							raise "\nAsserting - #{value} failed\nFound: '#{e.text}', Expecting: '#{value}'"
+						end
 				end
 			else
 				raise "\nCould not find element #{e.element_name}"
 			end
 			return log, "Pass"
 		rescue Exception => e
+			
 			log << e.message
 			return log, "Fail"
 		end
@@ -78,13 +84,17 @@ class Methods
 		end
 	end
 
+	def tk_screenshot(path)
+		@driver.save_screenshot("#{path}")
+	end
+
 	def close
 		@driver.quit
 	end
 
 	private
 		def find hash
-		    @wait.until { @driver.find_element hash }
-		    @driver.find_element hash
+			@wait.until { @driver.find_element hash }
+			@driver.find_element hash
 		end
 end

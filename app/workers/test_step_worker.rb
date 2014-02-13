@@ -80,10 +80,10 @@ class TestStepWorker
 			EM.run {
 				client = Faye::Client.new('http://192.168.10.54:9292/faye')
 				publication = client.publish("/users/#{user.id}", "
-					$('#notification').replaceWith('<a id=\"notification\" href=\"#\" data-toggle=\"tooltip\" title=\"Job Completed\"><i class=\"icon-globe\"></i></a>');
+					$('#notification').replaceWith('<a id=\"notification\" href=\"#\" data-toggle=\"tooltip\" title=\"Test Step #{test_step.step_name} execution completed\"><i class=\"icon-globe\"></i></a>');
 					$('#notification').css(\"background-color\", \"#8A0707\");
 					$('#status').replaceWith('<a id=\"status\" href=\"#\" data-toggle=\"tooltip\" title=\"No Jobs in Progress\"><i class=\"icon-bell\"></i></a>');
-					$(\'#exec_st_#{test_step.id}\').replaceWith(\'<a id=\"exec_st_#{test_step.id}\" href=\"/exec_test_step?test_step_id=#{test_step.id}\" data-remote=\"true\" class=\"btn btn-small icon-wrench\"></a>\');
+					$('#exec_st_#{test_step.id}').replaceWith('<a id=\"exec_st_#{test_step.id}\" href=\"/exec_test_step?test_step_id=#{test_step.id}\" data-remote=\"true\" class=\"btn btn-small icon-wrench\"></a>');
 				")
 
 				publication.callback do

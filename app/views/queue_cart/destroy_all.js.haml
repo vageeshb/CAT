@@ -1,0 +1,3 @@
+$("#notice").replaceWith("#{escape_javascript render 'layouts/flash.html.haml'}");
+- @jobs.each do |job|
+	$("#job_#{job.id}").remove()

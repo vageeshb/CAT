@@ -1,19 +1,22 @@
-= form_for @user do |f|
-  - if @user.errors.any?
-    .offset4.text-center
-      #error_explanation.alert.alert-error
-        %h4= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
-        %ul
-        - @user.errors.full_messages.each do |msg|
-          %li= msg
-  .row-fluid
-    .span1.offset5= f.label :email
-    .span3= f.text_field :email
-  .row-fluid
-    .span1.offset5= f.label :password
-    .span3= f.password_field :password
-  .row-fluid
-    .span1.offset5= f.label :password_confirmation, "Confirmation"
-    .span3= f.password_field :password_confirmation
-  .row-fluid
-    .span3.offset6= f.submit 'Save', class: 'btn btn-primary'
+.modal-header 
+	%button.close{:'data-dismiss'=>"modal"} ×
+	%h3 Sign Up
+= form_for @user, remote: true do |f|
+	.modal-body.text-right
+		- if @user.errors.any?
+			#error_explanation.alert.alert-error
+				%h4= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+				%ul
+				- @user.errors.full_messages.each do |msg|
+					%li= msg
+		.row-fluid
+			.span3= f.label :email
+			.span3.offset2= f.text_field :email
+		.row-fluid
+			.span3= f.label :password
+			.span3.offset2= f.password_field :password
+		.row-fluid
+			.span3= f.label :password_confirmation, "Confirmation"
+			.span3.offset2= f.password_field :password_confirmation
+	.modal-footer
+		= f.submit 'Create User', class: 'btn btn-primary'
