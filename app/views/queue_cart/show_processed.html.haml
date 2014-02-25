@@ -1,0 +1,29 @@
+#tab-content
+	.row-fluid
+		%span.label.label-info Processed Job(s)
+	%br
+	= render(:partial => "layouts/flash")
+	#test-contents
+		%table.table.table-bordered.table-hover
+			%tbody
+				%tr.info
+					%td Test Suite Name
+					%td Test Name
+					%td Test Step Name
+					%td Start Time
+					%td End Time
+					%td Elapsed Time
+					%td Options
+				- if @jobs.nil? or @jobs.size==0
+					%tr
+						%td{colspan: 7} No Processed Jobs!
+				- else
+					- @jobs.each do |job|
+						%tr{id:"job_#{job.id}"}
+							%td= TestSuite.find(job.test_suite_id).name
+							%td= Test.find(job.test_id).name unless job.test_id.nil?
+							%td= TestStep.find(job.test_step_id).step_name unless job.test_step_id.nil?
+							%td= job.start_time.strftime('%d-%m-%Y %H:%M:%S')
+							%td= job.finish_time.strftime('%d-%m-%Y %H:%M:%S')
+							%td= "#{(job.finish_time-job.start_time).round} seconds"
+							%td= link_to "", queue_path(id: job.id), method: :delete, data: {confirm: "Are you sure you want to delete the pending job?"}, remote: true, class: 'btn btn-small icon-trash'

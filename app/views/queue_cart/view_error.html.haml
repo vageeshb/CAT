@@ -1,10 +1,10 @@
 #imageFrame
 	#imageModal.modal.hide.fade
 		.modal-header
-			= "#{@error_name}_Error"
+			= "Error for '#{@description}'"
 			%button.close{:'data-dismiss'=>"modal"} ×
-		- if File.exists? "#{Rails.public_path}/errors/#{@user_name}/#{@error_name}_error.png"
-			%img{src: "errors/#{@user_name}/#{@error_name}_error.png"}
+		- if File.exists? "#{Rails.public_path}/errors/#{@user_name}/#{@file_name}"
+			%img{src: "errors/#{@user_name}/#{@file_name}"}
 		- else
 			%img{src: "404.jpg"}
 	:javascript

@@ -2,16 +2,12 @@
 
 one:
   name: MyString
+  job_id: 1
   user_id: 1
-  test_suite_id: 1
-  test_id: 1
-  test_step_id: 1
-  status: MyString
+  description: MyString
 
 two:
   name: MyString
+  job_id: 1
   user_id: 1
-  test_suite_id: 1
-  test_id: 1
-  test_step_id: 1
-  status: MyString
+  description: MyString

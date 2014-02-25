@@ -2,11 +2,9 @@ class CreateReports < ActiveRecord::Migration
   def change
     create_table :reports do |t|
       t.string :name
+      t.integer :job_id
       t.integer :user_id
-      t.integer :test_suite_id
-      t.integer :test_id
-      t.integer :test_step_id
-      t.string :status
+      t.string :description
 
       t.timestamps
     end

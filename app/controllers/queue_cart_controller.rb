@@ -2,8 +2,7 @@ class QueueCartController < ApplicationController
     before_action :signed_in_user
     
     def show_pending
-        @user_id = current_user.id
-        @jobs = Job.where(user_id: @user_id, status: "Pending").to_a
+        @jobs = Job.where('user_id = ? and status != ?', current_user.id, "Finished").to_a
         respond_to do |wants|
             wants.html {  }
             wants.js { render 'queue_cart/show_pending.js.haml' }
@@ -11,6 +10,7 @@ class QueueCartController < ApplicationController
     end
 
     def show_processed
+        @jobs = Job.where(user_id: current_user.id, status: 'Finished')
         respond_to do |wants|
             wants.html {  }
             wants.js { }
@@ -18,11 +18,24 @@ class QueueCartController < ApplicationController
     end
 
     def reports
-       # To do
+        @reports = Report.select('max(reports.id), reports.name, max(created_at) as last_run, max(job_id) as job_id').where(user_id: current_user.id).group('name').order('last_run DESC').to_a
+        respond_to do |wants|
+            wants.html {  }
+            wants.js { }
+        end
     end
 
     def show_report
-        # To do
+        @job = Job.find(params[:job_id])
+        @reports = Report.where(job_id: @job.id, user_id: current_user.id).order('created_at')
+        @test_suite = TestSuite.find(@job.test_suite_id)
+        @test = Test.find(@job.test_id)
+        @final_status = "Pass"
+        @reports.each do |rep|
+            if rep.status == 'Fail'
+                @final_status = "Fail"
+            end
+        end
     end
 
     def delete_report
@@ -30,11 +43,14 @@ class QueueCartController < ApplicationController
     end
 
     def view_error
-        # To Do
+        @job = Job.find(params[:job_id])
+        @description = params[:desc]
+        @user_name = current_user.email
+        @file_name = @job.id.to_s + "_error.png"
     end
 
     def execute
-        @user_id = current_user.id
+         
         if params[:commit]=="Execute Selected" then
             @job_ids = params[:job_id]
             @job_ids.each do |id|
@@ -48,7 +64,7 @@ class QueueCartController < ApplicationController
             end
         else
             @job_ids = Array.new
-            @jobs = Job.where(user_id: @user_id, status: 'Pending').to_a
+            @jobs = Job.where(user_id: current_user.id, status: 'Pending').to_a
             @jobs.each do |job|
                 @job_ids.push job.id
                 job.update_attributes(status: 'Started')

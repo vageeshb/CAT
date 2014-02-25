@@ -29,7 +29,8 @@
 							%td= "#{t.last_run.strftime("%d-%m-%Y at %H:%M:%S")}"
 						- else
 							%td No Run
-						%td= link_to "", edit_test_suite_test_path(@test_suite.id, t.id),remote: true, class: 'btn btn-small icon-pencil'
-						%td= link_to "", test_suite_test_path(@test_suite.id, t.id), method: :delete, confirm: "Are you sure you want to delete test \'#{t.name}\'?", remote: true,class: 'btn btn-small icon-trash'
-						%td= link_to "", exec_test_path(test_id: t.id), remote: true, id: "exec_#{t.id}"  , class: 'btn btn-small icon-wrench'
-						%td= link_to "", add_tc_to_queue_path(test_id: t.id), remote: true, id: "queue_tc_#{t.id}", class: 'btn btn-small icon-shopping-cart'
+						%td= link_to "", edit_test_suite_test_path(@test_suite.id, t.id),remote: true, class: 'btn btn-small icon-pencil', data: {toggle: 'tooltip'}, title: 'Edit test case'
+						%td= link_to "", test_suite_test_path(@test_suite.id, t.id), method: :delete, data: {toggle: 'tooltip', confirm: "Are you sure you want to delete test \'#{t.name}\'?" }, remote: true,class: 'btn btn-small icon-trash', title: 'Delete test case'
+						// %td= link_to "", exec_test_path(test_id: t.id), remote: true, id: "exec_#{t.id}"  , class: 'btn btn-small icon-wrench'
+						%td= link_to "", '#', remote: true, class: 'btn btn-small icon-share', data: {toggle: 'tooltip'}, title: 'Copy test case'
+						%td= link_to "", add_tc_to_queue_path(test_id: t.id), remote: true, id: "queue_tc_#{t.id}", class: 'btn btn-small icon-shopping-cart', data: {toggle: 'tooltip'}, title: 'Add test case to job queue'

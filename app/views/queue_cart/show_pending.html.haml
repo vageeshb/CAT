@@ -31,7 +31,7 @@
 						- else
 							- @jobs.each do |job|
 								%tr{id:"job_#{job.id}"}
-									- if job.status!="Pending"
+									- if job.status=="Started"
 										%td= image_tag("step.gif")
 									- else
 										%td

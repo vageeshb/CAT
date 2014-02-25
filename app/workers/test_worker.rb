@@ -78,7 +78,9 @@ class TestWorker
 		log=""
 		
 		run_status=""
-		
+
+		report_name = DateTime.now.strftime('%d%m%y_%H%M%S')
+		Report.create(name: report_name, job_id: job_id, user_id: user.id, description: "Execution of #{test.name} started")
 		test_steps.each do |ts|
 			if ts.element_id
 				web_element = WebElement.find(ts.element_id)
@@ -88,6 +90,7 @@ class TestWorker
 				log, run_status = method.assert(ts.expected)
 				logger.info("\nTest Step: '" + ts.step_name.to_s + "' : " + run_status.to_s)
 			end
+			Report.create(name: report_name, job_id: job_id, user_id: user.id, description: "#{ts.step_name.to_s}", status: run_status.to_s)
 			if run_status=="Fail" then
 				method.tk_screenshot("./public/errors/#{user.email}/#{job_id}_error.png")
 				logger.info("Fail Message: #{log}")
@@ -96,7 +99,7 @@ class TestWorker
 		end
 		
 		method.close
-
+		Report.create(name: report_name, job_id: job_id, user_id: user.id, description: "Execution of #{test.name} completed")
 		return run_status
 	end
 	########################################

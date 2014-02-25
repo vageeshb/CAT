@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140213104554) do
+ActiveRecord::Schema.define(version: 20140224085638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 20140213104554) do
     t.integer  "test_step_id"
     t.string   "status"
     t.datetime "start_time"
-    t.string   "finish_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "finish_time"
   end
 
   create_table "object_repositories", force: true do |t|
@@ -47,13 +47,12 @@ ActiveRecord::Schema.define(version: 20140213104554) do
 
   create_table "reports", force: true do |t|
     t.string   "name"
+    t.integer  "job_id"
     t.integer  "user_id"
-    t.integer  "test_suite_id"
-    t.integer  "test_id"
-    t.integer  "test_step_id"
-    t.string   "status"
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "status"
   end
 
   create_table "selenium_configs", force: true do |t|

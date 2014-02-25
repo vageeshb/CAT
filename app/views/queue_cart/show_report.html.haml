@@ -2,62 +2,47 @@
 	#imageFrame
 	.row-fluid
 		%span.label.label-info Report Name:
-		%span= @executions.first.name
+		%span= @reports.first.name
 	%br
 	.row-fluid
-		%span.label.label-info Web Elements Used:
+		%span.label.label-info Test Suite Name:
+		%span= @test_suite.name
+	%br
+	.row-fluid
+		%span.label.label-info Test Name:
+		%span= @test.name
 	%br
 	%table.table.table-bordered.table-hover
 		%tr.info
-			%td Repository Name
-			%td Element Name
-			%td Element Type
-			%td Identifier Name
-			%td Identifier Value
-		- @steps.each do |st|
-			- if !st.element_id.nil?
-				%tr
-					%td= ObjectRepository.find(st.object_repository_id).name
-					%td= WebElement.find(st.element_id).element_name
-					%td= WebElement.find(st.element_id).element_type
-					%td= WebElement.find(st.element_id).identifier_name
-					%td= WebElement.find(st.element_id).identifier_value
-	.row-fluid
-		%span.label.label-info Test Steps:
-	%br
-	%table.table.table-bordered.table-hover
-		%tr.info
-			%td Step Name
-			%td Step Function
-			%td Step Value
+			%td S. No.
+			%td Description
 			%td Status
-			%td Last Run
-		- @steps.each do |st|
-			- if st.status=="Pass"
+			%td Executed on
+		- @counter = 1
+		- @reports.each do |report_step|
+			- if report_step.status=='Pass'
 				%tr.success
-					%td= st.step_name
-					- if st.function.nil?
-						%td Assert
-						%td= st.expected
-					- else
-						%td= st.function
-						%td= st.value
-					%td= st.status
-					%td= st.last_run.strftime('%d-%m-%Y at %H:%M:%S')
-			- else
+					%td= @counter
+					%td= report_step.description
+					%td= report_step.status
+					%td= report_step.created_at.strftime('%d-%m-%Y at %H:%M:%S')
+			- elsif report_step.status=='Fail'
 				%tr.warning
-					%td= link_to raw("<i class='icon-tag'></i> #{st.step_name}"), queue_view_error_path(error_name: @executions.first.name), remote: true, data: {toggle: 'tooltip'} , title: 'Click to view error screenshot!'
-					- if st.function.nil?
-						%td Assert
-						%td= st.expected
-					- else
-						%td= st.function
-						%td= st.value
-					%td= st.status
-					%td= st.last_run.strftime('%d-%m-%Y at %H:%M:%S')
+					%td= @counter
+					%td= link_to raw("<i class='icon-tag'> </i> #{report_step.description}"), queue_view_error_path(job_id: report_step.job_id, desc: report_step.description), remote: true, data: {toggle: 'tooltip'}, title: 'Click to see error screenshot'
+					%td= report_step.status
+					%td= report_step.created_at.strftime('%d-%m-%Y at %H:%M:%S')
+			- else
+				%td= @counter
+				%td= report_step.description
+				%td= report_step.status
+				%td= report_step.created_at.strftime('%d-%m-%Y at %H:%M:%S')
+			- @counter += 1
 	.row-fluid
-		Final Status:
-		- if @final_status=="Pass"
+		%span.label.label-info Final Status:
+		- if @final_status == 'Fail'
+			%span.label.label-fail Fail
+		- elsif @final_status == 'Pass'
 			%span.label.label-success Pass
 		- else
-			%span.label.label-fail Fail
+			%span.label= @final_status

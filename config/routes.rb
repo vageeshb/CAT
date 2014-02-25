@@ -10,7 +10,7 @@ APA::Application.routes.draw do
     resources :web_elements
   end
   resources :test_suites do
-    resources :tests       
+    resources :tests
   end
   resources :tests do
     resources :test_steps
@@ -39,6 +39,7 @@ APA::Application.routes.draw do
   # Test Paths
   match '/exec_test_step' , to: 'tests#exec_test_step', via: 'get'
   match '/add_ts_to_queue', to: 'tests#add_ts', via: 'get'
+  #match '/test_suites/:test_suite_id/tests/:id/copy', to: 'tests#copy_test', via: 'get'
 
   # Test Step Paths
   match '/update_pages', to: 'test_steps#update_pages', via: 'get'

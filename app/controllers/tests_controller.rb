@@ -91,6 +91,10 @@ class TestsController < ApplicationController
 			end
 		end
 	end
+	
+	def copy
+		# To Do
+	end
 
 	def add_ts
 		@test_step = TestStep.find(params[:test_step_id])
